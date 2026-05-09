@@ -3,14 +3,14 @@
 import { useState } from 'react';
 
 const leftLinks = [
-  { label: 'New In', href: '#' },
-  { label: 'Sofas', href: '#' },
-  { label: 'Dining', href: '#' },
+  { label: 'Table Sets', href: '/outdoor-table-sets' },
+  { label: 'Umbrellas', href: '/umbrellas' },
+  { label: 'Gazebos', href: '/gazebos' },
 ];
 
 const rightLinks = [
-  { label: 'Accessories', href: '#' },
-  { label: 'Outlet', href: '#', accent: true },
+  { label: 'Outdoor Lights', href: '/outdoor-lights' },
+  { label: 'Cosmetics', href: '/cosmetics', accent: true },
 ];
 
 const allLinks = [...leftLinks, ...rightLinks];
@@ -31,9 +31,9 @@ export default function Navbar({ onCartOpen }) {
               <span className="material-symbols-outlined text-3xl">menu</span>
             </button>
 
-            <div className="hidden lg:flex items-center gap-10">
+            <div className="hidden lg:flex items-center gap-6">
               {leftLinks.map((l) => (
-                <a key={l.label} className="font-button text-button uppercase text-primary hover:text-brand-terracotta transition-colors" href={l.href}>
+                <a key={l.label} className="font-button text-button uppercase text-primary hover:text-brand-terracotta transition-colors whitespace-nowrap" href={l.href}>
                   {l.label}
                 </a>
               ))}
@@ -47,11 +47,11 @@ export default function Navbar({ onCartOpen }) {
             </a>
 
             <div className="flex items-center gap-1 md:gap-3">
-              <div className="hidden lg:flex items-center gap-10 mr-6">
+              <div className="hidden lg:flex items-center gap-6 mr-4">
                 {rightLinks.map((l) => (
                   <a
                     key={l.label}
-                    className={`font-button text-button uppercase transition-colors ${
+                    className={`font-button text-button uppercase transition-colors whitespace-nowrap ${
                       l.accent ? 'text-brand-terracotta hover:opacity-80' : 'text-primary hover:text-brand-terracotta'
                     }`}
                     href={l.href}
@@ -63,15 +63,9 @@ export default function Navbar({ onCartOpen }) {
 
               <button
                 aria-label="Search"
-                className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center hover:text-brand-terracotta transition-colors"
+                className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center hover:text-brand-terracotta transition-colors"
               >
                 <span className="material-symbols-outlined">search</span>
-              </button>
-              <button
-                aria-label="Account"
-                className="p-3 min-w-[44px] min-h-[44px] hidden md:flex items-center justify-center hover:text-brand-terracotta transition-colors"
-              >
-                <span className="material-symbols-outlined">person</span>
               </button>
               <button
                 aria-label="Open cart"
@@ -86,8 +80,9 @@ export default function Navbar({ onCartOpen }) {
         </div>
       </nav>
 
-      <div className="bg-brand-sage text-white py-2.5 text-center text-[12px] sm:text-[13px] font-medium tracking-widest uppercase px-4">
-        Free White Glove Delivery on Orders Over £1,500
+      <div className="bg-brand-sage text-white py-2.5 text-center text-[12px] sm:text-[13px] font-medium tracking-widest uppercase px-4 flex items-center justify-center gap-2">
+        <span className="material-symbols-outlined text-base" aria-hidden="true">local_shipping</span>
+        Free Delivery on Orders Over &pound;100
       </div>
 
       {menuOpen && (

@@ -3,7 +3,7 @@ const reviews = [
     rating: 5,
     quote: 'Bought this for our diamond anniversary and I must say, it has held up beautifully. Two summers in the rain and not a mark on it. Pleased we spent the money rather than going to one of the catalogue places.',
     name: 'Margaret Whitfield',
-    age: 68,
+
     location: 'North Yorkshire',
     product: 'Aspen Teak Dining Set',
   },
@@ -11,7 +11,6 @@ const reviews = [
     rating: 5,
     quote: 'Wife and I had been putting off replacing our old set for years. Finally took the plunge. Build quality is leagues above what we paid for back in 2009. The cushions do not sag, which I appreciate at my age.',
     name: 'David Thornton',
-    age: 54,
     location: 'Surrey',
     product: 'Dakota Corner Sofa',
   },
@@ -19,7 +18,6 @@ const reviews = [
     rating: 5,
     quote: 'Frankly, at 72 I wanted something that would outlast me. Lovely teak, sensible assembly. My son had it together in an afternoon while we had tea. No complaints whatsoever.',
     name: 'Elizabeth Pemberton',
-    age: 72,
     location: 'Cotswolds',
     product: 'Hartwood Extending Set',
   },
@@ -27,7 +25,6 @@ const reviews = [
     rating: 5,
     quote: 'Delivery chaps were polite and brought it round the back without me having to ask. That alone earns five stars these days. The furniture itself is excellent.',
     name: 'John Beaumont',
-    age: 47,
     location: 'Cheshire',
     product: 'Brompton 6-Seater',
   },
@@ -35,7 +32,6 @@ const reviews = [
     rating: 5,
     quote: 'Three storms this autumn and the umbrella has not so much as flinched. The fabric on our previous one tore in the first proper wind. Money well spent.',
     name: 'Patricia Hartley',
-    age: 63,
     location: 'Devon',
     product: 'Riviera Cantilever 3m',
   },
@@ -43,7 +39,6 @@ const reviews = [
     rating: 5,
     quote: 'Our gazebo arrived precisely when promised. Took a weekend to put together with my brother-in-law’s help. Looks rather grand, actually. The neighbours have been popping by to admire it.',
     name: 'Robert Sinclair',
-    age: 58,
     location: 'Hampshire',
     product: 'Manor Cedar Gazebo',
   },
@@ -51,7 +46,6 @@ const reviews = [
     rating: 4,
     quote: 'Cushions stood up to a Scottish summer, which says something. Colours have not faded one bit. Delivery was a few days late but the customer service team rang to apologise, which was decent of them.',
     name: 'Susan Forrester',
-    age: 51,
     location: 'Edinburgh',
     product: 'Linen Scatter Cushions',
   },
@@ -59,7 +53,6 @@ const reviews = [
     rating: 5,
     quote: 'Refreshing to find a company that does not treat us older customers like we are bothering them. The lady on the phone took her time explaining the warranty. I ended up buying twice as much as I had planned.',
     name: 'William Ashcroft',
-    age: 70,
     location: 'Pembrokeshire',
     product: 'Heritage Octagonal Gazebo',
   },
@@ -67,7 +60,6 @@ const reviews = [
     rating: 5,
     quote: 'Second purchase from Heritage. Lights this time. Husband was sceptical about the price but agreed they were properly made when they arrived. We use the garden far more in the evenings now.',
     name: 'Helen Marston',
-    age: 45,
     location: 'Northumberland',
     product: 'Festoon String Lights',
   },
@@ -75,7 +67,6 @@ const reviews = [
     rating: 5,
     quote: 'Hosted a fortieth around the new dining table last weekend. Everyone wanted to know where it came from. Worth every pound, even if my wife had to convince me at the time.',
     name: 'George Whitmore',
-    age: 38,
     location: 'Bath',
     product: 'Aspen Teak Dining Set',
   },
@@ -83,7 +74,6 @@ const reviews = [
     rating: 5,
     quote: 'I am rather wary of buying furniture online but a friend recommended Heritage. The five-year warranty gave me the confidence to go ahead. Sturdy, arrived on the day they said it would. No fuss.',
     name: 'Margaret Hughes',
-    age: 65,
     location: 'Bristol',
     product: 'Cotswold Round Bistro',
   },
@@ -91,7 +81,6 @@ const reviews = [
     rating: 5,
     quote: 'Should have bought these years ago. They have transformed our patio in the evenings. We sit out far later now. My wife has commented twice this week, and that is high praise from her.',
     name: 'Anthony Cromwell',
-    age: 62,
     location: 'Norfolk',
     product: 'Edison Bulb String Lights',
   },
@@ -99,7 +88,6 @@ const reviews = [
     rating: 5,
     quote: 'An heirloom piece, no doubt about it. Solid build, beautiful finish. We hope to pass it on to our daughter eventually. Heritage Garden have done a proper job here.',
     name: 'Catherine Blackwood',
-    age: 67,
     location: 'Kent',
     product: 'Hartwood Extending Set',
   },
@@ -107,7 +95,6 @@ const reviews = [
     rating: 5,
     quote: 'My wife and I are both in our seventies and finding outdoor furniture we can comfortably get in and out of is harder than people realise. The bench set was just right. Sturdy, decent height, no wobble.',
     name: 'Frederick Hawthorne',
-    age: 71,
     location: 'Yorkshire Dales',
     product: 'Devonshire Bench Set',
   },
@@ -115,7 +102,6 @@ const reviews = [
     rating: 4,
     quote: 'Wood quality was better than I had hoped. Took us longer than expected to assemble but the instructions were clear enough. Survived three months of Lake District weather without issue, which is the real test.',
     name: 'Joan Pickering',
-    age: 59,
     location: 'Lake District',
     product: 'Marlow 4-Seater Café',
   },
@@ -176,26 +162,17 @@ function ReviewCard({ review }) {
             </span>
             {review.location}
           </span>
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant text-[11px] font-medium">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-sage/10 text-brand-sage text-[10px] uppercase tracking-widest font-button">
             <span
               className="material-symbols-outlined text-[14px]"
+              style={{ fontVariationSettings: "'FILL' 1" }}
               aria-hidden="true"
             >
-              person
+              shopping_bag
             </span>
-            Age {review.age}
+            {review.product}
           </span>
         </div>
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-sage/10 text-brand-sage text-[10px] uppercase tracking-widest font-button">
-          <span
-            className="material-symbols-outlined text-[14px]"
-            style={{ fontVariationSettings: "'FILL' 1" }}
-            aria-hidden="true"
-          >
-            shopping_bag
-          </span>
-          {review.product}
-        </span>
       </div>
     </article>
   );

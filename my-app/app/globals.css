@@ -161,6 +161,33 @@
   .animate-scroll-reviews { animation: none; }
 }
 
+/* Trust bar title shine sweep */
+@keyframes title-shine {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.trust-title-shine {
+  background: linear-gradient(
+    90deg,
+    var(--color-brand-sage) 0%,
+    var(--color-brand-sage) 35%,
+    #b8d9a8 50%,
+    var(--color-brand-sage) 65%,
+    var(--color-brand-sage) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: title-shine 40s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .trust-title-shine {
+    animation: none;
+    -webkit-text-fill-color: var(--color-brand-sage);
+  }
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-on-surface);

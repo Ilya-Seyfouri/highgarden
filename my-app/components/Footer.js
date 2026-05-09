@@ -27,7 +27,6 @@ const aboutLinks = [
 
 const paymentMethods = ['Visa', 'Mastercard', 'Amex', 'PayPal', 'Apple Pay', 'Google Pay', 'Klarna'];
 
-const legalLinks = ['Terms & Conditions', 'Privacy Policy', 'Cookie Policy', 'Accessibility', 'Modern Slavery Statement'];
 
 export default function Footer() {
   return (
@@ -171,29 +170,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Legal bar */}
-      <div className="border-t border-outline-variant/40 bg-surface-container-low">
-        <div className="max-w-[1440px] mx-auto px-5 md:px-10 py-8 md:py-10 flex flex-col gap-5">
-          <p className="text-xs text-on-surface-variant/80 leading-relaxed max-w-4xl">
-            Heritage Garden Ltd is a company registered in England and Wales. Company No. 12345678. VAT No. GB 123 4567 89.
-            Registered office: 1 Garden Lane, Bourton-on-the-Water, Gloucestershire, GL54 0AA. Heritage Garden Ltd acts as a credit broker, not a lender. Klarna financing is provided by Klarna Bank AB (publ).
-          </p>
-          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 pt-4 border-t border-outline-variant/40">
-            <p className="text-xs text-on-surface-variant/80">
-              &copy; {new Date().getFullYear()} Heritage Garden Ltd. All rights reserved.
-            </p>
-            <ul className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-on-surface-variant">
-              {legalLinks.map((l) => (
-                <li key={l}>
-                  <a href="#" className="hover:text-brand-terracotta transition-colors">
-                    {l}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
     </footer>
   );
 }

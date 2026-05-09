@@ -13,59 +13,73 @@ const cartItems = [
 
 export default function CartDrawer({ isOpen, onClose }) {
   return (
-    <aside
-      className={`fixed right-0 top-0 bottom-0 z-[100] flex flex-col p-margin h-full w-96 bg-surface-dim/80 backdrop-blur-3xl saturate-180 border-l border-white/20 transition-transform duration-500 ease-out ${
-        isOpen ? 'translate-x-0' : 'translate-x-full'
-      }`}
-    >
-      <div className="flex justify-between items-center mb-12">
-        <div>
-          <h2 className="font-h2 text-h2 text-primary leading-none mb-1">Your Selection</h2>
-          <p className="font-body-md text-body-md text-on-surface-variant">Premium Outdoor Living</p>
-        </div>
-        <button
+    <>
+      {/* Backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-[99] bg-black/30"
           onClick={onClose}
-          className="w-12 h-12 glass-card rounded-full flex items-center justify-center hover:rotate-90 transition-all duration-500"
-        >
-          <span className="material-symbols-outlined">close</span>
-        </button>
-      </div>
+          aria-hidden="true"
+        />
+      )}
 
-      <div className="flex gap-4 mb-8">
-        <button className="bg-secondary-container text-on-secondary-container rounded-full px-6 py-2 font-label-caps text-label-caps flex items-center gap-2">
-          <span className="material-symbols-outlined text-sm">shopping_bag</span>
-          Basket
-        </button>
-        <button className="text-on-surface-variant hover:text-on-surface px-6 py-2 font-label-caps text-label-caps transition-all flex items-center gap-2">
-          <span className="material-symbols-outlined text-sm">favorite</span>
-          Wishlist
-        </button>
-      </div>
-
-      <div className="flex-1 overflow-y-auto space-y-6 mb-8 pr-2">
-        {cartItems.map((item) => (
-          <div key={item.id} className="flex gap-4 items-center">
-            <div className="relative w-20 h-20 rounded-lg overflow-hidden glass-card flex-shrink-0">
-              <Image src={item.src} alt={item.alt} fill className="object-cover" />
-            </div>
-            <div className="flex-1">
-              <h5 className="font-h3 text-xl mb-1">{item.name}</h5>
-              <p className="text-xs text-on-surface-variant uppercase tracking-widest">Qty: {item.qty}</p>
-            </div>
-            <span className="font-h3 text-lg text-primary">{item.price}</span>
+      <aside
+        className={`fixed right-0 top-0 bottom-0 z-[100] flex flex-col h-full w-[420px] max-w-full bg-white border-l-2 border-brand-sage shadow-2xl transition-transform duration-500 ease-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-8 py-6 border-b border-outline-variant/40">
+          <div>
+            <span className="font-label-caps text-label-caps text-brand-terracotta uppercase block mb-1">Heritage Garden</span>
+            <h2 className="font-h2 text-2xl text-brand-sage leading-none">Your Selection</h2>
           </div>
-        ))}
-      </div>
-
-      <div className="mt-auto space-y-6 pt-8 border-t border-white/10">
-        <div className="flex justify-between items-center">
-          <span className="font-label-caps text-label-caps opacity-60">Subtotal</span>
-          <span className="font-h3 text-2xl text-white">£245.00</span>
+          <button
+            onClick={onClose}
+            aria-label="Close cart"
+            className="w-11 h-11 border border-outline-variant flex items-center justify-center hover:border-brand-sage hover:text-brand-sage transition-all"
+          >
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
         </div>
-        <button className="w-full py-5 bg-primary-container text-on-primary-container rounded-full font-label-caps text-label-caps tracking-[2px] hover:scale-105 transition-all duration-300">
-          Proceed to Checkout
-        </button>
-      </div>
-    </aside>
+
+        {/* Items */}
+        <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
+          {cartItems.map((item) => (
+            <div key={item.id} className="flex gap-5 items-start">
+              <div className="relative w-24 h-24 shrink-0 overflow-hidden border border-outline-variant/40">
+                <Image src={item.src} alt={item.alt} fill className="object-cover" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h5 className="font-h3 text-lg text-brand-sage mb-1 leading-snug">{item.name}</h5>
+                <div className="flex items-center gap-3 mt-2">
+                  <span className="font-body-md text-xs text-on-surface-variant uppercase tracking-widest">Qty: {item.qty}</span>
+                  <button className="text-xs text-brand-terracotta font-body-md uppercase tracking-widest hover:opacity-70 transition-opacity">Remove</button>
+                </div>
+              </div>
+              <span className="font-h3 text-lg text-brand-sage shrink-0">{item.price}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="px-8 py-6 border-t border-outline-variant/40 space-y-5">
+          <div className="flex justify-between items-center">
+            <span className="font-body-md text-sm text-on-surface-variant uppercase tracking-widest">Subtotal</span>
+            <span className="font-h3 text-2xl text-brand-sage">£245.00</span>
+          </div>
+          <p className="font-body-md text-xs text-on-surface-variant">Delivery calculated at checkout. Free on orders over £100.</p>
+          <button className="w-full min-h-[52px] bg-brand-sage text-white font-button text-button uppercase hover:bg-brand-terracotta transition-colors">
+            Proceed to Checkout
+          </button>
+          <button
+            onClick={onClose}
+            className="w-full min-h-[48px] border border-brand-sage text-brand-sage font-button text-button uppercase hover:bg-surface-container-low transition-colors"
+          >
+            Continue Shopping
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }

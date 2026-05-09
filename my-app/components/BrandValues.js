@@ -5,27 +5,29 @@ export default function BrandValues() {
     <section className="bg-surface-container-lowest border-y border-outline-variant/40 py-16 md:py-24">
       <div className="max-w-[1440px] mx-auto px-5 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="space-y-6 md:space-y-8 order-2 lg:order-1">
-            <span className="font-label-caps text-label-caps text-brand-terracotta uppercase">The Heritage Promise</span>
+          <div className="order-2 lg:order-1">
+            <span className="font-label-caps text-label-caps text-brand-terracotta uppercase block mb-4">The Heritage Promise</span>
+            <div className="space-y-6 md:space-y-8">
             <h2 className="font-h1 text-h2-mobile md:text-h2 lg:text-5xl text-brand-sage leading-tight">
               British Heritage Meets Modern Innovation
             </h2>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
               From our studio in the heart of the Cotswolds, we design furniture that respects the timeless beauty of the English garden while embracing materials that thrive in our unique climate.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-8 md:gap-y-10 pt-2 md:pt-6">
-              <div className="space-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 md:pt-6">
+              <div className="space-y-2 bg-white border border-outline-variant rounded-3xl px-6 py-6 shadow-md">
                 <h4 className="font-h3 text-xl text-brand-sage">Built to Last</h4>
                 <p className="font-body-md text-base text-on-surface-variant leading-relaxed">
                   Sustainably sourced Grade-A teak and UV-resistant performance fabrics.
                 </p>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 bg-white border border-outline-variant rounded-3xl px-6 py-6 shadow-md">
                 <h4 className="font-h3 text-xl text-brand-sage">Smart Design</h4>
                 <p className="font-body-md text-base text-on-surface-variant leading-relaxed">
                   Easy assembly systems and modular layouts for effortless versatility.
                 </p>
               </div>
+            </div>
             </div>
           </div>
 

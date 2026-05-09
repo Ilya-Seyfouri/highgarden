@@ -28,13 +28,13 @@ export default function HeroSection() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6 pt-2 md:pt-4 max-w-md sm:max-w-none mx-auto">
             <a
-              className="min-h-[60px] px-8 md:px-12 flex items-center justify-center bg-white text-brand-sage font-button text-button uppercase border-2 border-white hover:bg-transparent hover:text-white transition-all duration-300"
+              className="min-h-[60px] px-8 md:px-12 flex items-center justify-center bg-brand-terracotta text-white font-button text-button uppercase border-2 border-brand-terracotta hover:bg-transparent hover:text-white transition-all duration-300"
               href="#bestsellers"
             >
               Shop The Collection
             </a>
             <a
-              className="min-h-[60px] px-8 md:px-12 flex items-center justify-center bg-transparent text-white font-button text-button uppercase border-2 border-white hover:bg-white hover:text-brand-sage transition-all duration-300"
+              className="min-h-[60px] px-8 md:px-12 flex items-center justify-center bg-white text-brand-sage font-button text-button uppercase border-2 border-white hover:bg-transparent hover:text-white transition-all duration-300"
               href="#bestsellers"
             >
               Explore Dining Sets
