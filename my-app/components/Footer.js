@@ -1,28 +1,28 @@
 const helpLinks = [
-  'Customer Service',
-  'Delivery Information',
-  'Returns & Refunds',
-  'Order Tracking',
-  'Furniture Care Guide',
-  'FAQs',
+  { label: 'Customer Service', href: '/customer-service' },
+  { label: 'Delivery Information', href: '/delivery-information' },
+  { label: 'Returns & Refunds', href: '/returns-refunds' },
+  { label: 'Order Tracking', href: '/order-tracking' },
+  { label: 'Furniture Care Guide', href: '/furniture-care-guide' },
+  { label: 'FAQs', href: '/faqs' },
 ];
 
 const shopLinks = [
-  'Outdoor Table Sets',
-  'Umbrellas',
-  'Gazebos',
-  'Outdoor Lights',
-  'Cosmetics',
-  'Outlet',
+  { label: 'Outdoor Furniture', href: '/outdoor-furniture' },
+  { label: 'Garden Parasols', href: '/garden-parasols' },
+  { label: 'Gazebos', href: '/gazebos' },
+  { label: 'Outdoor Lights', href: '/outdoor-lights' },
+  { label: 'Accessories', href: '/accessories' },
+  { label: 'Outlet', href: '#' },
 ];
 
 const aboutLinks = [
-  'Our Story',
-  'The Cotswolds Studio',
-  'Sustainability',
-  'Press & Media',
-  'Careers',
-  'Trade Programme',
+  { label: 'Our Story', href: '/our-story' },
+  { label: 'The Cotswolds Studio', href: '/the-cotswolds-studio' },
+  { label: 'Sustainability', href: '/sustainability' },
+  { label: 'Press & Media', href: '/press-and-media' },
+  { label: 'Careers', href: '/careers' },
+  { label: 'Trade Programme', href: '/trade-programme' },
 ];
 
 const paymentMethods = ['Visa', 'Mastercard', 'Amex', 'PayPal', 'Apple Pay', 'Google Pay', 'Klarna'];
@@ -30,88 +30,90 @@ const paymentMethods = ['Visa', 'Mastercard', 'Amex', 'PayPal', 'Apple Pay', 'Go
 
 export default function Footer() {
   return (
-    <footer className="bg-surface-container-lowest border-t border-outline-variant/40">
+    <footer className="border-t border-outline-variant/40">
       {/* Main column area */}
-      <div className="max-w-[1440px] mx-auto px-5 md:px-10 py-16 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 md:gap-16">
-          {/* Brand */}
-          <div className="lg:col-span-4 space-y-6 md:space-y-8">
-            <div className="font-h1 text-3xl md:text-4xl text-brand-sage tracking-tight">Heritage Garden</div>
-            <p className="font-body-md text-base text-on-surface-variant leading-relaxed max-w-sm">
-              Refining the British outdoor experience with furniture and decor crafted to last a lifetime.
-            </p>
-            <address className="not-italic font-body-md text-sm text-on-surface-variant leading-relaxed space-y-1">
-              <p className="font-bold text-brand-sage uppercase tracking-widest text-[11px] mb-2 font-button">
-                Cotswolds Design Studio
+      <div className="bg-brand-sage text-white">
+        <div className="max-w-[1440px] mx-auto px-5 md:px-10 py-16 md:py-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 md:gap-16">
+            {/* Brand */}
+            <div className="lg:col-span-4 space-y-6 md:space-y-8">
+              <div className="font-h1 text-3xl md:text-4xl text-white tracking-tight">Heritage Garden</div>
+              <p className="font-body-md text-base text-white/75 leading-relaxed max-w-sm">
+                Refining the British outdoor experience with furniture and decor crafted to last a lifetime.
               </p>
-              <p>1 Garden Lane</p>
-              <p>Bourton-on-the-Water</p>
-              <p>Gloucestershire GL54 0AA</p>
-              <p className="pt-2">
-                <a href="mailto:hello@heritagegarden.co.uk" className="hover:text-brand-terracotta">
-                  hello@heritagegarden.co.uk
-                </a>
-              </p>
-            </address>
-            <div className="flex gap-3 pt-2">
-              {[
-                { icon: 'facebook', label: 'Facebook' },
-                { icon: 'camera', label: 'Instagram' },
-                { icon: 'public', label: 'Pinterest' },
-                { icon: 'play_circle', label: 'YouTube' },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  aria-label={s.label}
-                  href="#"
-                  className="w-11 h-11 border border-outline-variant/60 flex items-center justify-center hover:bg-brand-sage hover:text-white hover:border-brand-sage transition-all"
-                >
-                  <span className="material-symbols-outlined text-lg">{s.icon}</span>
-                </a>
-              ))}
+              <address className="not-italic font-body-md text-sm text-white/75 leading-relaxed space-y-1">
+                <p className="font-bold text-white uppercase tracking-widest text-[11px] mb-2 font-button">
+                  Cotswolds Design Studio
+                </p>
+                <p>1 Garden Lane</p>
+                <p>Bourton-on-the-Water</p>
+                <p>Gloucestershire GL54 0AA</p>
+                <p className="pt-2">
+                  <a href="mailto:hello@heritagegarden.co.uk" className="text-white hover:text-brand-terracotta transition-colors">
+                    hello@heritagegarden.co.uk
+                  </a>
+                </p>
+              </address>
+              <div className="flex gap-3 pt-2">
+                {[
+                  { icon: 'facebook', label: 'Facebook' },
+                  { icon: 'camera', label: 'Instagram' },
+                  { icon: 'public', label: 'Pinterest' },
+                  { icon: 'play_circle', label: 'YouTube' },
+                ].map((s) => (
+                  <a
+                    key={s.label}
+                    aria-label={s.label}
+                    href="#"
+                    className="w-11 h-11 border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-brand-sage hover:border-white transition-all"
+                  >
+                    <span className="material-symbols-outlined text-lg">{s.icon}</span>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Help & Information */}
-          <div className="lg:col-span-3 space-y-5 md:space-y-6">
-            <h4 className="font-button text-button uppercase text-brand-sage">Help &amp; Information</h4>
-            <ul className="space-y-3 md:space-y-4 font-body-md text-base text-on-surface-variant">
-              {helpLinks.map((link) => (
-                <li key={link}>
-                  <a className="hover:text-brand-terracotta transition-colors" href="#">
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+            {/* Help & Information */}
+            <div className="lg:col-span-3 space-y-5 md:space-y-6">
+              <h4 className="font-button text-button uppercase text-white">Help &amp; Information</h4>
+              <ul className="space-y-3 md:space-y-4 font-body-md text-base text-white/75">
+                {helpLinks.map((link) => (
+                  <li key={link.href}>
+                    <a className="hover:text-brand-terracotta transition-colors" href={link.href}>
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Shop */}
-          <div className="lg:col-span-2 space-y-5 md:space-y-6">
-            <h4 className="font-button text-button uppercase text-brand-sage">Shop</h4>
-            <ul className="space-y-3 md:space-y-4 font-body-md text-base text-on-surface-variant">
-              {shopLinks.map((link) => (
-                <li key={link}>
-                  <a className="hover:text-brand-terracotta transition-colors" href="#">
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+            {/* Shop */}
+            <div className="lg:col-span-2 space-y-5 md:space-y-6">
+              <h4 className="font-button text-button uppercase text-white">Shop</h4>
+              <ul className="space-y-3 md:space-y-4 font-body-md text-base text-white/75">
+                {shopLinks.map((link) => (
+                  <li key={link.href}>
+                    <a className="hover:text-brand-terracotta transition-colors" href={link.href}>
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* About */}
-          <div className="lg:col-span-3 space-y-5 md:space-y-6">
-            <h4 className="font-button text-button uppercase text-brand-sage">About Heritage</h4>
-            <ul className="space-y-3 md:space-y-4 font-body-md text-base text-on-surface-variant">
-              {aboutLinks.map((link) => (
-                <li key={link}>
-                  <a className="hover:text-brand-terracotta transition-colors" href="#">
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            {/* About */}
+            <div className="lg:col-span-3 space-y-5 md:space-y-6">
+              <h4 className="font-button text-button uppercase text-white">About Heritage</h4>
+              <ul className="space-y-3 md:space-y-4 font-body-md text-base text-white/75">
+                {aboutLinks.map((link) => (
+                  <li key={link.href}>
+                    <a className="hover:text-brand-terracotta transition-colors" href={link.href}>
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

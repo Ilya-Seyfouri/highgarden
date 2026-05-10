@@ -1,4 +1,5 @@
 import './globals.css';
+import { CartProvider } from '@/lib/CartContext';
 
 export const metadata = {
   title: 'Heritage Garden | Premium British Garden Furniture',
@@ -21,7 +22,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="font-body-md text-body-md bg-background text-on-surface overflow-x-hidden">
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

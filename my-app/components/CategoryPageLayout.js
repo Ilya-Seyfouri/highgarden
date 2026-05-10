@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,13 +8,39 @@ import TrustBar from '@/components/TrustBar';
 import Newsletter from '@/components/Newsletter';
 import CartDrawer from '@/components/CartDrawer';
 import Footer from '@/components/Footer';
+import { priceToNumber } from '@/lib/products';
+import { useCart } from '@/lib/CartContext';
+
+const SORT_OPTIONS = [
+  { value: 'featured', label: 'Featured' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'newest', label: 'Newest' },
+];
 
 export default function CategoryPageLayout({ category }) {
-  const [cartOpen, setCartOpen] = useState(false);
+  const { addItem, openCart } = useCart();
+  const [sort, setSort] = useState('featured');
+
+  const sortedProducts = useMemo(() => {
+    const list = [...category.products];
+    switch (sort) {
+      case 'price-asc':
+        return list.sort((a, b) => priceToNumber(a.price) - priceToNumber(b.price));
+      case 'price-desc':
+        return list.sort((a, b) => priceToNumber(b.price) - priceToNumber(a.price));
+      case 'newest':
+        // No created-at field on the dataset; treat array order as oldest-first
+        // and reverse so the most recently added products appear first.
+        return list.reverse();
+      default:
+        return list;
+    }
+  }, [category.products, sort]);
 
   return (
     <>
-      <Navbar onCartOpen={() => setCartOpen(true)} />
+      <Navbar />
       <main>
         {/* Hero */}
         <div className="relative h-[70vh] md:h-[80vh] overflow-hidden">
@@ -83,47 +109,108 @@ export default function CategoryPageLayout({ category }) {
               </h2>
             </div>
             <div className="flex items-center gap-3">
-              <span className="font-body-md text-sm text-on-surface-variant">Sort by:</span>
-              <select className="font-body-md text-sm text-brand-sage border border-outline-variant px-4 py-2 bg-transparent focus:outline-none cursor-pointer">
-                <option>Featured</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Newest</option>
+              <label htmlFor="sort-by" className="font-body-md text-sm text-on-surface-variant">
+                Sort by:
+              </label>
+              <select
+                id="sort-by"
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+                className="font-body-md text-sm text-brand-sage border border-outline-variant px-4 py-2 bg-transparent focus:outline-none cursor-pointer"
+              >
+                {SORT_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {category.products.map((product) => (
-              <Link key={product.id} href={`/product/${product.slug}`} className="group block">
-                <div className="aspect-[4/5] bg-surface-container overflow-hidden relative mb-5 md:mb-6">
-                  <Image
-                    src={product.src}
-                    alt={product.alt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {product.badge && (
-                    <div className={`absolute top-4 left-4 px-4 py-1.5 font-label-caps text-[10px] tracking-widest shadow-sm uppercase ${product.badge.className}`}>
-                      {product.badge.text}
+            {sortedProducts.map((product) => {
+              // Sale tag takes priority over the existing badge: clearance first,
+              // then a generic "Save £X" tag if there's a strike-through price.
+              const saleTag = product.clearance
+                ? { text: `Clearance · ${product.discountPct}% Off`, className: 'bg-brand-terracotta text-white' }
+                : product.saving > 0
+                  ? { text: `Save £${product.saving.toLocaleString('en-GB')}`, className: 'bg-brand-sage text-white' }
+                  : null;
+              const topBadge = saleTag ?? product.badge;
+              const lowStock = product.stockCount != null && product.stockCount <= 5;
+
+              return (
+                <div key={product.id} className="group block">
+                  <Link href={`/product/${product.slug}`} className="block">
+                    <div className="aspect-[4/5] bg-surface-container overflow-hidden relative mb-5 md:mb-6">
+                      <Image
+                        src={product.src}
+                        alt={product.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {topBadge && (
+                        <div className={`absolute top-4 left-4 px-4 py-1.5 font-label-caps text-[10px] tracking-widest shadow-sm uppercase ${topBadge.className}`}>
+                          {topBadge.text}
+                        </div>
+                      )}
                     </div>
-                  )}
+                    <h3 className="font-h3 text-2xl text-brand-sage mb-2 group-hover:text-brand-terracotta transition-colors">{product.name}</h3>
+                    <p className="font-body-md text-base text-on-surface-variant mb-4 font-light">{product.variant}</p>
+                    <div className="flex items-baseline gap-3 flex-wrap">
+                      <span className="font-body-lg font-bold text-brand-sage text-xl">{product.price}</span>
+                      {product.originalPrice && (
+                        <span className="font-body-md text-base text-on-surface-variant line-through">
+                          {product.originalPrice}
+                        </span>
+                      )}
+                      {product.saving > 0 && (
+                        <span className="font-body-md text-sm font-semibold text-brand-terracotta">
+                          Save £{product.saving.toLocaleString('en-GB')}
+                        </span>
+                      )}
+                    </div>
+                    <p className={`mt-2 font-body-md text-sm ${lowStock ? 'text-brand-terracotta font-semibold' : 'text-on-surface-variant'}`}>
+                      {lowStock ? (
+                        <>
+                          <span className="inline-block w-2 h-2 rounded-full bg-brand-terracotta mr-2 align-middle" />
+                          Low In Stock — Only {product.stockCount} available
+                        </>
+                      ) : (
+                        <>
+                          <span className="inline-block w-2 h-2 rounded-full bg-green-600 mr-2 align-middle" />
+                          In Stock
+                        </>
+                      )}
+                    </p>
+                  </Link>
+                  <Link
+                    href={`/product/${product.slug}`}
+                    className="mt-5 md:mt-6 w-full min-h-[52px] bg-brand-sage text-white font-button text-button uppercase hover:bg-brand-terracotta transition-colors flex items-center justify-center"
+                  >
+                    View Product
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      addItem(product.slug);
+                      openCart();
+                    }}
+                    className="mt-2 w-full min-h-[52px] bg-[#E07A3C] text-white font-button text-button uppercase hover:bg-[#C9652A] transition-colors flex items-center justify-center gap-2"
+                  >
+                    <span className="material-symbols-outlined text-base" aria-hidden="true">add_shopping_cart</span>
+                    Add to Basket
+                  </button>
                 </div>
-                <h3 className="font-h3 text-2xl text-brand-sage mb-2 group-hover:text-brand-terracotta transition-colors">{product.name}</h3>
-                <p className="font-body-md text-base text-on-surface-variant mb-4 font-light">{product.variant}</p>
-                <span className="font-body-lg font-bold text-brand-sage text-xl block">{product.price}</span>
-                <div className="mt-5 md:mt-6 w-full min-h-[52px] bg-brand-sage text-white font-button text-button uppercase hover:bg-brand-terracotta transition-colors flex items-center justify-center">
-                  View Product
-                </div>
-              </Link>
-            ))}
+              );
+            })}
           </div>
         </section>
 
         <Newsletter />
       </main>
-      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+      <CartDrawer />
       <Footer />
     </>
   );

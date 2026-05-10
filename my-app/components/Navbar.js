@@ -1,22 +1,25 @@
 'use client';
 
 import { useState } from 'react';
+import { useCart } from '@/lib/CartContext';
 
 const leftLinks = [
-  { label: 'Table Sets', href: '/outdoor-table-sets' },
-  { label: 'Umbrellas', href: '/umbrellas' },
+  { label: 'Outdoor Furniture', href: '/outdoor-furniture' },
+  { label: 'Garden Parasols', href: '/garden-parasols', accent: true },
   { label: 'Gazebos', href: '/gazebos' },
 ];
 
 const rightLinks = [
   { label: 'Outdoor Lights', href: '/outdoor-lights' },
-  { label: 'Cosmetics', href: '/cosmetics', accent: true },
+  { label: 'Accessories', href: '/accessories', accent: true },
 ];
 
 const allLinks = [...leftLinks, ...rightLinks];
 
 export default function Navbar({ onCartOpen }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { totalItems, openCart } = useCart();
+  const handleCartClick = onCartOpen ?? openCart;
 
   return (
     <>
@@ -33,7 +36,13 @@ export default function Navbar({ onCartOpen }) {
 
             <div className="hidden lg:flex items-center gap-6">
               {leftLinks.map((l) => (
-                <a key={l.label} className="font-button text-button uppercase text-primary hover:text-brand-terracotta transition-colors whitespace-nowrap" href={l.href}>
+                <a
+                  key={l.label}
+                  className={`font-button text-button uppercase transition-colors whitespace-nowrap ${
+                    l.accent ? 'text-brand-terracotta hover:opacity-80' : 'text-primary hover:text-brand-terracotta'
+                  }`}
+                  href={l.href}
+                >
                   {l.label}
                 </a>
               ))}
@@ -70,10 +79,16 @@ export default function Navbar({ onCartOpen }) {
               <button
                 aria-label="Open cart"
                 className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center relative hover:text-brand-terracotta transition-colors"
-                onClick={onCartOpen}
+                onClick={handleCartClick}
               >
                 <span className="material-symbols-outlined">shopping_bag</span>
-                <span className="absolute top-1 right-1 bg-brand-terracotta text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                <span
+                  className={`absolute top-1 right-1 bg-brand-terracotta text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center transition-opacity ${
+                    totalItems > 0 ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  {totalItems}
+                </span>
               </button>
             </div>
           </div>

@@ -1,12 +1,27 @@
 import { notFound } from 'next/navigation';
-import { getProductBySlug, getRelatedProducts } from '@/lib/products';
+import {
+  getProductBySlug,
+  getRelatedProducts,
+  getBundleProducts,
+  getReviewsForProduct,
+} from '@/lib/products';
 import ProductPageLayout from '@/components/ProductPageLayout';
 
-export default function ProductPage({ params }) {
-  const product = getProductBySlug(params.slug);
+export default async function ProductPage({ params }) {
+  const { slug } = await params;
+  const product = getProductBySlug(slug);
   if (!product) notFound();
 
-  const relatedProducts = getRelatedProducts(params.slug, product.categoryHref);
+  const relatedProducts = getRelatedProducts(slug, product.categoryHref);
+  const bundleProducts = getBundleProducts(slug, product.categoryHref);
+  const reviews = getReviewsForProduct(slug);
 
-  return <ProductPageLayout product={product} relatedProducts={relatedProducts} />;
+  return (
+    <ProductPageLayout
+      product={product}
+      relatedProducts={relatedProducts}
+      bundleProducts={bundleProducts}
+      reviews={reviews}
+    />
+  );
 }

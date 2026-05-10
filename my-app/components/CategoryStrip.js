@@ -4,15 +4,15 @@ import Link from 'next/link';
 const categories = [
   {
     id: 'tables',
-    name: 'Outdoor Table Sets',
-    href: '/outdoor-table-sets',
+    name: 'Outdoor Furniture',
+    href: '/outdoor-furniture',
     src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC5YvNmC6TY6wVXHZZg6B45BVvANZC1oc3zpMMa8E4H7a-8_vU1bmXW8xC7jyjWB-PlwDbrAcCYC5N_xFQ-kmBs71DIuC5qeo3Px802dx6DUhR5-V5RHJkG6IusXuFaPWWkb6PMQzXHaVbGmRmXE1BAPQaV3S1Pm-9Rrddl_QyqL_y9aU4CGOJQ9oo_lBDxAWMn5JNVzS9_vbfCLXrJW31Xc16HmXrJ7IPgkECZREUQ3DybnFuBXwWHVosASFOxagq7kIDoY-XnO8E',
     alt: 'Outdoor teak dining table set on a stone terrace',
   },
   {
     id: 'umbrellas',
-    name: 'Umbrellas',
-    href: '/umbrellas',
+    name: 'Garden Parasols',
+    href: '/garden-parasols',
     src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBRgQKN_dRlJAVzVi8SCBgkpfZlpm004A4zFstdLye0NNj61iLmoBXQAFgkoxWLuLE3QL-xQjHL32iP3zuIhZP_vcWLnYH9s3dun0S7baaZP0Fj7vEX1k546A5FalBw1Di9PphiDpyAkpvSCs8cvEfpyrAVuDrvO4J0gBaMSWoKL4tCAjQY06sHJ5STTWWFMbshTNBKNZQG7Ewscj4-Wu4kawIXSs_3SlQgTfO_xNmJ2D9xS40Cg2_ccKkvq-31GjRWOj_fuDJUjTM',
     alt: 'Garden parasol shading an outdoor seating area',
   },
@@ -31,9 +31,9 @@ const categories = [
     alt: 'Outdoor garden lanterns lit at dusk',
   },
   {
-    id: 'cosmetics',
-    name: 'Cosmetics',
-    href: '/cosmetics',
+    id: 'accessories',
+    name: 'Accessories',
+    href: '/accessories',
     src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCCacYqZiVEBbcCpuDzLYx_sQfVK6ISVzkWrOm5EhQqQT8Zniyinhl7kYinMIly93cITqAkb7WXUgBkcLZTXjjA4izycC7fVh4VgjW7dJTsSs5hMvTrO6-dn6jTjDraxEdw8Gw_gpfBwHxMp2ZnymmMAQd3NI-aoFw3-IFZ6gJ33AgcM9iZiTs88FnmYGtawWMuqT1BLnoEOTYwfh5uRKelVU-jhRfUt0WUMkfJ9mCIF4qAZRM-cm5z2uF6QrL2_IHg4x1YnVkXi6I',
     alt: 'Outdoor cushions and decorative items styled on a garden bench',
   },

@@ -1,6 +1,3 @@
-'use client';
-
-import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import TrustBar from '@/components/TrustBar';
@@ -13,11 +10,9 @@ import CartDrawer from '@/components/CartDrawer';
 import Footer from '@/components/Footer';
 
 export default function HomePage() {
-  const [cartOpen, setCartOpen] = useState(false);
-
   return (
     <>
-      <Navbar onCartOpen={() => setCartOpen(true)} />
+      <Navbar />
       <main>
         <HeroSection />
         <CategoryStrip />
@@ -27,7 +22,7 @@ export default function HomePage() {
         <Testimonials />
         <Newsletter />
       </main>
-      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+      <CartDrawer />
       <Footer />
     </>
   );

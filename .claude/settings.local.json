@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/product/aspen-teak-dining-set)",
+      "Bash(curl -s -o /dev/null -w \"checkout: %{http_code}\\\\n\" http://localhost:3000/checkout)",
+      "Bash(curl -s -o /dev/null -w \"product: %{http_code}\\\\n\" http://localhost:3000/product/aspen-teak-dining-set)",
+      "Bash(curl -s -o /dev/null -w \"checkout w/item: %{http_code}\\\\n\" \"http://localhost:3000/checkout?item=riviera-cantilever-3m\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/checkout)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\ncat: %{http_code}\\\\n\" http://localhost:3000/ http://localhost:3000/umbrellas)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/outdoor-table-sets http://localhost:3000/umbrellas http://localhost:3000/gazebos http://localhost:3000/outdoor-lights http://localhost:3000/cosmetics)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/outdoor-table-sets http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/outdoor-table-sets)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\ncat: %{http_code}\\\\nproduct: %{http_code}\\\\ncheckout: %{http_code}\\\\ncheckout w/item: %{http_code}\\\\n\" http://localhost:3000/ http://localhost:3000/outdoor-table-sets http://localhost:3000/product/aspen-teak-dining-set http://localhost:3000/checkout \"http://localhost:3000/checkout?item=riviera-cantilever-3m\")",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"cs: %{http_code}\\\\ndelivery: %{http_code}\\\\nreturns: %{http_code}\\\\ntracking: %{http_code}\\\\ncare: %{http_code}\\\\nfaqs: %{http_code}\\\\n\" http://localhost:3000/customer-service http://localhost:3000/delivery-information http://localhost:3000/returns-refunds http://localhost:3000/order-tracking http://localhost:3000/furniture-care-guide http://localhost:3000/faqs)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"story: %{http_code}\\\\nstudio: %{http_code}\\\\nsustain: %{http_code}\\\\npress: %{http_code}\\\\ncareers: %{http_code}\\\\ntrade: %{http_code}\\\\n\" http://localhost:3000/our-story http://localhost:3000/the-cotswolds-studio http://localhost:3000/sustainability http://localhost:3000/press-and-media http://localhost:3000/careers http://localhost:3000/trade-programme)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\nfurn: %{http_code}\\\\nparasols: %{http_code}\\\\nacc: %{http_code}\\\\nold-cosmetics: %{http_code}\\\\nold-umbrellas: %{http_code}\\\\n\" http://localhost:3000/ http://localhost:3000/outdoor-furniture http://localhost:3000/garden-parasols http://localhost:3000/accessories http://localhost:3000/cosmetics http://localhost:3000/umbrellas)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\nfurn: %{http_code}\\\\nparasols: %{http_code}\\\\nacc: %{http_code}\\\\n\" http://localhost:3000/ http://localhost:3000/outdoor-furniture http://localhost:3000/garden-parasols http://localhost:3000/accessories)"
+    ]
+  }
+}

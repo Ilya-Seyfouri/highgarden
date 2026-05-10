@@ -1,11 +1,16 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import CartDrawer from '@/components/CartDrawer';
 import Footer from '@/components/Footer';
-import { deliveryText, warrantyText } from '@/lib/products';
+import { deliveryText, warrantyText, priceToNumber, formatPrice } from '@/lib/products';
+import PaymentLogo from '@/components/PaymentLogo';
+import ProductReviews from '@/components/ProductReviews';
+import { useCart } from '@/lib/CartContext';
+
+const BUNDLE_DISCOUNT = 0.1;
 
 function Stars({ rating }) {
   return (
@@ -46,15 +51,146 @@ function Accordion({ title, children }) {
   );
 }
 
-export default function ProductPageLayout({ product, relatedProducts }) {
-  const [cartOpen, setCartOpen] = useState(false);
+function BundleOffer({ product, bundleProducts }) {
+  const items = [product, ...bundleProducts];
+  // Main item is required; bundle add-ons are toggleable.
+  const [selected, setSelected] = useState(() => items.map(() => true));
+
+  const totals = useMemo(() => {
+    const includedCount = selected.filter(Boolean).length;
+    const subtotal = items.reduce(
+      (sum, item, i) => sum + (selected[i] ? priceToNumber(item.price) : 0),
+      0
+    );
+    // Discount only kicks in when at least one add-on is included.
+    const discountActive = includedCount > 1;
+    const discount = discountActive ? subtotal * BUNDLE_DISCOUNT : 0;
+    return { subtotal, discount, total: subtotal - discount, discountActive, includedCount };
+  }, [selected, items]);
+
+  const toggle = (i) => {
+    if (i === 0) return; // main item is locked in
+    setSelected((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
+  };
+
+  return (
+    <section className="mt-20 md:mt-28">
+      <div className="mb-8">
+        <span className="font-label-caps text-label-caps text-brand-terracotta uppercase mb-2 block">
+          Bundle &amp; Save
+        </span>
+        <h2 className="font-h2 text-h2-mobile md:text-h2 text-brand-sage">
+          Frequently Bought Together
+        </h2>
+        <p className="font-body-md text-base text-on-surface-variant mt-3 max-w-2xl">
+          Add the matching pieces below and save {Math.round(BUNDLE_DISCOUNT * 100)}% on the whole set.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 items-start">
+        {/* Item rail */}
+        <div className="lg:col-span-2 flex flex-col sm:flex-row items-center gap-4 sm:gap-2">
+          {items.map((item, i) => (
+            <div key={item.slug} className="contents sm:contents">
+              <label
+                className={`group relative flex-1 w-full sm:w-auto cursor-pointer block ${
+                  i === 0 ? 'cursor-default' : ''
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={selected[i]}
+                  onChange={() => toggle(i)}
+                  disabled={i === 0}
+                  className="sr-only peer"
+                />
+                <div
+                  className={`aspect-square relative overflow-hidden bg-surface-container border-2 transition-colors ${
+                    selected[i] ? 'border-brand-sage' : 'border-outline-variant/40'
+                  }`}
+                >
+                  <Image
+                    src={item.images[0]}
+                    alt={item.name}
+                    fill
+                    sizes="(max-width: 1024px) 33vw, 20vw"
+                    className={`object-cover transition-opacity ${selected[i] ? '' : 'opacity-40'}`}
+                  />
+                  <div className="absolute top-3 left-3 w-6 h-6 flex items-center justify-center bg-white border border-outline-variant">
+                    {selected[i] && (
+                      <span className="material-symbols-outlined text-brand-sage text-base">check</span>
+                    )}
+                  </div>
+                  {i === 0 && (
+                    <div className="absolute bottom-3 left-3 px-2 py-0.5 bg-brand-sage text-white font-label-caps text-[10px] tracking-widest uppercase">
+                      This Item
+                    </div>
+                  )}
+                </div>
+                <div className="mt-3">
+                  <p className="font-body-md text-sm font-semibold text-brand-sage leading-tight line-clamp-2">
+                    {item.name}
+                  </p>
+                  <p className="font-body-md text-sm text-on-surface-variant mt-1">{item.price}</p>
+                </div>
+              </label>
+              {i < items.length - 1 && (
+                <span className="hidden sm:flex items-center justify-center text-brand-sage text-2xl shrink-0 px-1 self-start mt-[40%]">
+                  +
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Summary card */}
+        <div className="bg-surface-container-low p-6 md:p-7 border border-outline-variant/40">
+          <p className="font-button text-button uppercase tracking-widest text-brand-sage mb-4">
+            Bundle Total
+          </p>
+          <div className="flex items-baseline gap-3 mb-1">
+            <span className="font-h2 text-3xl text-brand-sage">{formatPrice(totals.total)}</span>
+            {totals.discountActive && (
+              <span className="font-body-md text-base text-on-surface-variant line-through">
+                {formatPrice(totals.subtotal)}
+              </span>
+            )}
+          </div>
+          {totals.discountActive ? (
+            <p className="font-body-md text-sm text-brand-terracotta font-medium mb-5">
+              You save {formatPrice(totals.discount)} ({Math.round(BUNDLE_DISCOUNT * 100)}% off)
+            </p>
+          ) : (
+            <p className="font-body-md text-sm text-on-surface-variant mb-5">
+              Add an item to unlock {Math.round(BUNDLE_DISCOUNT * 100)}% off the bundle.
+            </p>
+          )}
+          <button className="w-full min-h-[52px] bg-brand-sage text-white font-button text-button uppercase hover:bg-brand-terracotta transition-colors">
+            Add Bundle to Basket ({totals.includedCount} {totals.includedCount === 1 ? 'item' : 'items'})
+          </button>
+          <p className="font-body-md text-xs text-on-surface-variant mt-3 text-center">
+            Free delivery on bundles over £100
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function ProductPageLayout({ product, relatedProducts, bundleProducts = [], reviews = [] }) {
+  const { addItem, openCart } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] ?? null);
   const [qty, setQty] = useState(1);
 
+  const handleAddToBasket = () => {
+    addItem(product.slug, { qty, size: selectedSize });
+    openCart();
+  };
+
   return (
     <>
-      <Navbar onCartOpen={() => setCartOpen(true)} />
+      <Navbar />
       <main>
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 py-8 md:py-12">
 
@@ -175,16 +311,28 @@ export default function ProductPageLayout({ product, relatedProducts }) {
                     <span className="material-symbols-outlined text-base">add</span>
                   </button>
                 </div>
-                <button className="flex-1 min-h-[52px] bg-brand-sage text-white font-button text-button uppercase hover:bg-brand-terracotta transition-colors">
+                <button
+                  type="button"
+                  onClick={handleAddToBasket}
+                  className="flex-1 min-h-[52px] bg-brand-sage text-white font-button text-button uppercase hover:bg-brand-terracotta transition-colors"
+                >
                   Add to Basket
                 </button>
               </div>
+
+              {/* Secondary CTA */}
+              <Link
+                href={`/checkout?item=${product.slug}`}
+                className="w-full min-h-[52px] bg-[#E07A3C] text-white font-button text-button uppercase hover:bg-[#C9652A] transition-colors flex items-center justify-center"
+              >
+                Checkout
+              </Link>
 
               {/* Trust badges */}
               <div className="grid grid-cols-3 gap-3 pt-2 border-t border-outline-variant/40">
                 {[
                   { icon: 'local_shipping', label: 'Free Delivery', sub: 'Over £100' },
-                  { icon: 'keyboard_return', label: '30-Day Returns', sub: 'From your home' },
+                  { icon: 'card_giftcard', label: '30-Day Returns', sub: 'From your home' },
                   { icon: 'workspace_premium', label: '5-Year Warranty', sub: 'Registered free' },
                 ].map((b) => (
                   <div key={b.label} className="flex flex-col items-center text-center gap-1 p-3 bg-surface-container-low">
@@ -195,13 +343,51 @@ export default function ProductPageLayout({ product, relatedProducts }) {
                 ))}
               </div>
 
+              {/* Trustpilot banner */}
+              <a
+                href="https://uk.trustpilot.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 p-3 bg-white border border-outline-variant/60 hover:border-[#00B67A] transition-colors"
+              >
+                <span className="font-body-md text-sm font-medium text-on-surface">Excellent</span>
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span
+                      key={i}
+                      className="w-5 h-5 flex items-center justify-center"
+                      style={{ backgroundColor: '#00B67A' }}
+                    >
+                      <span
+                        className="material-symbols-outlined text-white text-base leading-none"
+                        style={{ fontVariationSettings: "'FILL' 1" }}
+                        aria-hidden="true"
+                      >
+                        star
+                      </span>
+                    </span>
+                  ))}
+                </div>
+                <span className="font-body-md text-xs text-on-surface-variant">
+                  <span className="font-semibold text-on-surface">4.8</span> · 2,341 reviews on
+                </span>
+                <span className="flex items-center gap-1 font-body-md text-sm font-bold text-on-surface">
+                  <span
+                    className="material-symbols-outlined text-base leading-none"
+                    style={{ color: '#00B67A', fontVariationSettings: "'FILL' 1" }}
+                    aria-hidden="true"
+                  >
+                    star
+                  </span>
+                  Trustpilot
+                </span>
+              </a>
+
               {/* Payment methods */}
               <div className="flex flex-wrap items-center gap-2 pt-1">
                 <span className="font-body-md text-xs text-on-surface-variant uppercase tracking-widest mr-1">Pay with:</span>
                 {['Visa', 'Mastercard', 'Amex', 'PayPal', 'Klarna'].map((p) => (
-                  <span key={p} className="text-[10px] uppercase tracking-wide font-bold text-on-surface-variant border border-outline-variant/60 px-2 py-1 bg-white">
-                    {p}
-                  </span>
+                  <PaymentLogo key={p} brand={p} className="w-12 h-8" />
                 ))}
               </div>
             </div>
@@ -230,6 +416,14 @@ export default function ProductPageLayout({ product, relatedProducts }) {
             </Accordion>
           </div>
 
+          {/* ── Reviews ── */}
+          <ProductReviews product={product} reviews={reviews} />
+
+          {/* ── Bundle offer ── */}
+          {bundleProducts.length > 0 && (
+            <BundleOffer product={product} bundleProducts={bundleProducts} />
+          )}
+
           {/* ── Related Products ── */}
           {relatedProducts.length > 0 && (
             <div className="mt-20 md:mt-28">
@@ -249,7 +443,7 @@ export default function ProductPageLayout({ product, relatedProducts }) {
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
-                    <h3 className="font-h3 text-xl text-brand-sage mb-1">{p.name}</h3>
+                    <h3 className="font-h3 text-xl text-brand-sage mb-1 group-hover:text-brand-terracotta transition-colors">{p.name}</h3>
                     <p className="font-body-md text-sm text-on-surface-variant mb-2">{p.variant}</p>
                     <span className="font-body-lg font-bold text-brand-sage">{p.price}</span>
                   </Link>
@@ -261,7 +455,7 @@ export default function ProductPageLayout({ product, relatedProducts }) {
         </div>
       </main>
       <Footer />
-      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+      <CartDrawer />
     </>
   );
 }

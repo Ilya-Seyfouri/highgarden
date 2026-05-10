@@ -11,14 +11,15 @@ const deliveryText = 'Standard delivery 3–5 working days. Free on orders over 
 const warrantyText = 'Every Heritage Garden product is covered by our comprehensive 5-Year Warranty from the date of purchase, registered free at checkout. This covers manufacturing defects and structural failures under normal domestic use. Simply contact our UK customer service team and we will arrange a repair, replacement, or full refund.';
 
 const allProducts = [
-  // ─── Outdoor Table Sets ───────────────────────────────────────────────────
+  // ─── Outdoor Furniture ────────────────────────────────────────────────────
   {
     slug: 'aspen-teak-dining-set',
     name: 'Aspen Teak Dining Set',
     variant: '8-seater sustainable teak masterpiece',
     price: '£2,450.00',
-    category: 'Outdoor Table Sets',
-    categoryHref: '/outdoor-table-sets',
+    originalPrice: '£2,995.00',
+    category: 'Outdoor Furniture',
+    categoryHref: '/outdoor-furniture',
     images: [IMG.dining, IMG.terrace, IMG.dining, IMG.terrace],
     sizes: ['6 Seater', '8 Seater', '10 Seater'],
     rating: 4.9, reviewCount: 127,
@@ -33,8 +34,10 @@ const allProducts = [
     name: 'Hartwood Extending Set',
     variant: 'Extends from 6 to 10 seats',
     price: '£1,895.00',
-    category: 'Outdoor Table Sets',
-    categoryHref: '/outdoor-table-sets',
+    originalPrice: '£2,495.00',
+    clearance: true,
+    category: 'Outdoor Furniture',
+    categoryHref: '/outdoor-furniture',
     images: [IMG.terrace, IMG.dining, IMG.terrace, IMG.dining],
     sizes: ['6–8 Seater', '8–10 Seater'],
     rating: 4.8, reviewCount: 84,
@@ -48,8 +51,9 @@ const allProducts = [
     name: 'Brompton 6-Seater',
     variant: 'Classic all-weather rattan',
     price: '£1,299.00',
-    category: 'Outdoor Table Sets',
-    categoryHref: '/outdoor-table-sets',
+    stockCount: 2,
+    category: 'Outdoor Furniture',
+    categoryHref: '/outdoor-furniture',
     images: [IMG.dining, IMG.terrace, IMG.dining, IMG.terrace],
     sizes: ['4 Seater', '6 Seater', '8 Seater'],
     rating: 4.7, reviewCount: 203,
@@ -64,8 +68,8 @@ const allProducts = [
     name: 'Cotswold Round Bistro',
     variant: 'Intimate 2-seater bistro table',
     price: '£485.00',
-    category: 'Outdoor Table Sets',
-    categoryHref: '/outdoor-table-sets',
+    category: 'Outdoor Furniture',
+    categoryHref: '/outdoor-furniture',
     images: [IMG.terrace, IMG.dining, IMG.terrace, IMG.dining],
     sizes: ['2 Seater'],
     rating: 4.8, reviewCount: 61,
@@ -79,8 +83,8 @@ const allProducts = [
     name: 'Marlow 4-Seater Café Set',
     variant: 'Café-inspired garden dining',
     price: '£745.00',
-    category: 'Outdoor Table Sets',
-    categoryHref: '/outdoor-table-sets',
+    category: 'Outdoor Furniture',
+    categoryHref: '/outdoor-furniture',
     images: [IMG.dining, IMG.terrace, IMG.dining, IMG.terrace],
     sizes: ['4 Seater'],
     rating: 4.6, reviewCount: 45,
@@ -94,8 +98,8 @@ const allProducts = [
     name: 'Devon Folding Teak Set',
     variant: 'Space-saving solid teak',
     price: '£895.00',
-    category: 'Outdoor Table Sets',
-    categoryHref: '/outdoor-table-sets',
+    category: 'Outdoor Furniture',
+    categoryHref: '/outdoor-furniture',
     images: [IMG.terrace, IMG.dining, IMG.terrace, IMG.dining],
     sizes: ['4 Seater', '6 Seater'],
     rating: 4.7, reviewCount: 38,
@@ -106,14 +110,15 @@ const allProducts = [
     dimensions: 'Table (open): W150 × D80 × H74cm | Folded depth: 28cm',
   },
 
-  // ─── Umbrellas ────────────────────────────────────────────────────────────
+  // ─── Garden Parasols ──────────────────────────────────────────────────────
   {
     slug: 'riviera-cantilever-3m',
     name: 'Riviera Cantilever 3m',
     variant: 'Wind-resistant side-post parasol',
     price: '£395.00',
-    category: 'Umbrellas',
-    categoryHref: '/umbrellas',
+    originalPrice: '£475.00',
+    category: 'Garden Parasols',
+    categoryHref: '/garden-parasols',
     images: [IMG.umbrella, IMG.umbrella, IMG.umbrella, IMG.umbrella],
     sizes: ['3m Round', '3.5m Round'],
     rating: 4.8, reviewCount: 156,
@@ -128,8 +133,8 @@ const allProducts = [
     name: 'Heritage Classic Parasol 2.5m',
     variant: 'Traditional push-up parasol in ecru',
     price: '£245.00',
-    category: 'Umbrellas',
-    categoryHref: '/umbrellas',
+    category: 'Garden Parasols',
+    categoryHref: '/garden-parasols',
     images: [IMG.umbrella, IMG.umbrella, IMG.umbrella, IMG.umbrella],
     sizes: ['2m', '2.5m', '3m'],
     rating: 4.7, reviewCount: 92,
@@ -143,8 +148,10 @@ const allProducts = [
     name: 'Bali Sun Shade 4m Square',
     variant: 'Oversized square cantilever',
     price: '£545.00',
-    category: 'Umbrellas',
-    categoryHref: '/umbrellas',
+    originalPrice: '£695.00',
+    clearance: true,
+    category: 'Garden Parasols',
+    categoryHref: '/garden-parasols',
     images: [IMG.umbrella, IMG.umbrella, IMG.umbrella, IMG.umbrella],
     sizes: ['3m Square', '4m Square'],
     rating: 4.6, reviewCount: 47,
@@ -159,8 +166,8 @@ const allProducts = [
     name: 'Tuscany Market Umbrella 3m',
     variant: 'Hand-stitched canopy, aluminium pole',
     price: '£315.00',
-    category: 'Umbrellas',
-    categoryHref: '/umbrellas',
+    category: 'Garden Parasols',
+    categoryHref: '/garden-parasols',
     images: [IMG.umbrella, IMG.umbrella, IMG.umbrella, IMG.umbrella],
     sizes: ['2.5m', '3m'],
     rating: 4.7, reviewCount: 73,
@@ -174,8 +181,8 @@ const allProducts = [
     name: 'Clifton LED Parasol 2.7m',
     variant: 'Solar-charged LED canopy lighting',
     price: '£485.00',
-    category: 'Umbrellas',
-    categoryHref: '/umbrellas',
+    category: 'Garden Parasols',
+    categoryHref: '/garden-parasols',
     images: [IMG.umbrella, IMG.umbrella, IMG.umbrella, IMG.umbrella],
     sizes: ['2.7m Round'],
     rating: 4.5, reviewCount: 29,
@@ -189,8 +196,9 @@ const allProducts = [
     name: 'Coastal Tilt Umbrella 2m',
     variant: 'Compact tilt parasol for small terraces',
     price: '£195.00',
-    category: 'Umbrellas',
-    categoryHref: '/umbrellas',
+    stockCount: 3,
+    category: 'Garden Parasols',
+    categoryHref: '/garden-parasols',
     images: [IMG.umbrella, IMG.umbrella, IMG.umbrella, IMG.umbrella],
     sizes: ['2m'],
     rating: 4.6, reviewCount: 88,
@@ -207,6 +215,7 @@ const allProducts = [
     name: 'Manor Cedar Gazebo 3×4m',
     variant: 'FSC-certified cedar with copper roof finials',
     price: '£2,850.00',
+    originalPrice: '£3,250.00',
     category: 'Gazebos',
     categoryHref: '/gazebos',
     images: [IMG.gazebo, IMG.gazebo, IMG.gazebo, IMG.gazebo],
@@ -238,6 +247,8 @@ const allProducts = [
     name: 'Pavilion Steel Pergola 4×3m',
     variant: 'Powder-coated steel with louvre roof',
     price: '£1,295.00',
+    originalPrice: '£1,795.00',
+    clearance: true,
     category: 'Gazebos',
     categoryHref: '/gazebos',
     images: [IMG.gazebo, IMG.gazebo, IMG.gazebo, IMG.gazebo],
@@ -269,6 +280,7 @@ const allProducts = [
     name: 'Belgravia Pergola 5×4m',
     variant: 'Grand open-top pergola with side panels',
     price: '£2,195.00',
+    stockCount: 1,
     category: 'Gazebos',
     categoryHref: '/gazebos',
     images: [IMG.gazebo, IMG.gazebo, IMG.gazebo, IMG.gazebo],
@@ -302,6 +314,7 @@ const allProducts = [
     name: 'Festoon String Lights 10m',
     variant: '40 warm-white bulbs, IP44 rated',
     price: '£95.00',
+    originalPrice: '£119.00',
     category: 'Outdoor Lights',
     categoryHref: '/outdoor-lights',
     images: [IMG.lights, IMG.lights, IMG.lights, IMG.lights],
@@ -318,6 +331,8 @@ const allProducts = [
     name: 'Edison Bulb String Lights 5m',
     variant: 'Vintage filament bulbs, 20 lights',
     price: '£65.00',
+    originalPrice: '£95.00',
+    clearance: true,
     category: 'Outdoor Lights',
     categoryHref: '/outdoor-lights',
     images: [IMG.lights, IMG.lights, IMG.lights, IMG.lights],
@@ -379,6 +394,7 @@ const allProducts = [
     name: 'Greenwich Bollard Light',
     variant: 'Cast aluminium, mains-powered',
     price: '£145.00',
+    stockCount: 4,
     category: 'Outdoor Lights',
     categoryHref: '/outdoor-lights',
     images: [IMG.lights, IMG.lights, IMG.lights, IMG.lights],
@@ -391,14 +407,15 @@ const allProducts = [
     dimensions: 'Ø12 × H60cm | Cable entry: bottom | Weight: 2.8kg',
   },
 
-  // ─── Cosmetics ────────────────────────────────────────────────────────────
+  // ─── Accessories ──────────────────────────────────────────────────────────
   {
     slug: 'linen-scatter-cushions',
     name: 'Linen Scatter Cushions Set of 4',
     variant: 'Fade-resistant outdoor linen, 45×45cm',
     price: '£145.00',
-    category: 'Cosmetics',
-    categoryHref: '/cosmetics',
+    originalPrice: '£175.00',
+    category: 'Accessories',
+    categoryHref: '/accessories',
     images: [IMG.cosmetics, IMG.cosmetics, IMG.cosmetics, IMG.cosmetics],
     sizes: ['45×45cm', '50×50cm', '30×50cm Lumbar'],
     rating: 4.8, reviewCount: 143,
@@ -413,8 +430,9 @@ const allProducts = [
     name: 'Heritage Outdoor Rug 200×300cm',
     variant: 'UV-stable flatweave in sage & cream',
     price: '£285.00',
-    category: 'Cosmetics',
-    categoryHref: '/cosmetics',
+    stockCount: 2,
+    category: 'Accessories',
+    categoryHref: '/accessories',
     images: [IMG.cosmetics, IMG.cosmetics, IMG.cosmetics, IMG.cosmetics],
     sizes: ['160×230cm', '200×300cm', '250×350cm'],
     rating: 4.7, reviewCount: 67,
@@ -428,8 +446,8 @@ const allProducts = [
     name: 'Cotswold Planter Pair',
     variant: 'Handthrown terracotta, frost-proof glaze',
     price: '£195.00',
-    category: 'Cosmetics',
-    categoryHref: '/cosmetics',
+    category: 'Accessories',
+    categoryHref: '/accessories',
     images: [IMG.cosmetics, IMG.cosmetics, IMG.cosmetics, IMG.cosmetics],
     sizes: ['Small (H30cm)', 'Medium (H40cm)', 'Large (H55cm)'],
     rating: 4.9, reviewCount: 89,
@@ -444,8 +462,8 @@ const allProducts = [
     name: 'Teak Furniture Oil 500ml',
     variant: 'Nourishing oil for all teak pieces',
     price: '£18.00',
-    category: 'Cosmetics',
-    categoryHref: '/cosmetics',
+    category: 'Accessories',
+    categoryHref: '/accessories',
     images: [IMG.cosmetics, IMG.cosmetics, IMG.cosmetics, IMG.cosmetics],
     sizes: ['500ml', '1 Litre'],
     rating: 4.8, reviewCount: 224,
@@ -459,8 +477,8 @@ const allProducts = [
     name: 'Garden Wind Chime',
     variant: 'Solid brass tubes, hand-tuned',
     price: '£35.00',
-    category: 'Cosmetics',
-    categoryHref: '/cosmetics',
+    category: 'Accessories',
+    categoryHref: '/accessories',
     images: [IMG.cosmetics, IMG.cosmetics, IMG.cosmetics, IMG.cosmetics],
     sizes: ['Small (5 tubes)', 'Large (8 tubes)'],
     rating: 4.6, reviewCount: 48,
@@ -474,8 +492,10 @@ const allProducts = [
     name: 'Garden Candle Lantern Set of 2',
     variant: 'Galvanised steel with smoked glass',
     price: '£65.00',
-    category: 'Cosmetics',
-    categoryHref: '/cosmetics',
+    originalPrice: '£85.00',
+    clearance: true,
+    category: 'Accessories',
+    categoryHref: '/accessories',
     images: [IMG.cosmetics, IMG.cosmetics, IMG.cosmetics, IMG.cosmetics],
     sizes: ['Small (H25cm)', 'Large (H40cm)', 'Mixed Set (1 of each)'],
     rating: 4.7, reviewCount: 112,
@@ -497,19 +517,187 @@ export function getRelatedProducts(slug, categoryHref) {
     .slice(0, 3);
 }
 
+export function getBundleProducts(slug, categoryHref) {
+  // Pick 2 complementary picks: prefer same-category neighbours,
+  // then fill from the Accessories range so most bundles include an extra.
+  const sameCategory = allProducts.filter(
+    (p) => p.categoryHref === categoryHref && p.slug !== slug
+  );
+  const accessories = allProducts.filter(
+    (p) => p.categoryHref === '/accessories' && p.slug !== slug
+  );
+  const picks = [];
+  if (sameCategory[0]) picks.push(sameCategory[0]);
+  if (categoryHref !== '/accessories' && accessories[0]) picks.push(accessories[0]);
+  else if (sameCategory[1]) picks.push(sameCategory[1]);
+  return picks.slice(0, 2);
+}
+
+export function priceToNumber(price) {
+  return Number(String(price).replace(/[^0-9.]/g, '')) || 0;
+}
+
+export function formatPrice(value) {
+  return `£${value.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+export function getHomeBestsellers() {
+  // Pick the highest-rated product per category, capped at 3 — used for the
+  // homepage Bestseller strip so each tile links to a real product page.
+  const seen = new Set();
+  return allProducts
+    .filter((p) => p.badge?.text === 'Best Seller')
+    .filter((p) => {
+      if (seen.has(p.categoryHref)) return false;
+      seen.add(p.categoryHref);
+      return true;
+    })
+    .slice(0, 3);
+}
+
 export function getCategoryProducts(categoryHref) {
   return allProducts
     .filter((p) => p.categoryHref === categoryHref)
-    .map((p) => ({
-      id: p.slug,
-      slug: p.slug,
-      name: p.name,
-      variant: p.variant,
-      price: p.price,
-      src: p.images[0],
-      alt: p.name,
-      badge: p.badge,
-    }));
+    .map((p) => {
+      const original = p.originalPrice ? priceToNumber(p.originalPrice) : null;
+      const current = priceToNumber(p.price);
+      const saving = original && original > current ? original - current : 0;
+      const discountPct = original && original > current
+        ? Math.round(((original - current) / original) * 100)
+        : 0;
+      return {
+        id: p.slug,
+        slug: p.slug,
+        name: p.name,
+        variant: p.variant,
+        price: p.price,
+        originalPrice: p.originalPrice ?? null,
+        clearance: p.clearance ?? false,
+        stockCount: p.stockCount ?? null,
+        saving,
+        discountPct,
+        src: p.images[0],
+        alt: p.name,
+        badge: p.badge,
+      };
+    });
+}
+
+// ─── Reviews ────────────────────────────────────────────────────────────────
+
+const REVIEWERS = [
+  { name: 'Margaret W.', location: 'Surrey' },
+  { name: 'David T.', location: 'North Yorkshire' },
+  { name: 'Susan H.', location: 'Gloucestershire' },
+  { name: 'Robert M.', location: 'Kent' },
+  { name: 'Patricia C.', location: 'Devon' },
+  { name: 'James R.', location: 'Hampshire' },
+  { name: 'Christine B.', location: 'Edinburgh' },
+  { name: 'Michael F.', location: 'Worcestershire' },
+  { name: 'Linda S.', location: 'Cornwall' },
+  { name: 'Andrew P.', location: 'Cheshire' },
+  { name: 'Jennifer K.', location: 'Suffolk' },
+  { name: 'Peter N.', location: 'Sussex' },
+  { name: 'Helen D.', location: 'Oxfordshire' },
+  { name: 'Stephen J.', location: 'Wiltshire' },
+];
+
+const REVIEW_BANK = {
+  '/outdoor-furniture': [
+    { rating: 5, title: 'Built like the old days', body: 'Solid teak, properly mortised joints, and the brass fixings are a lovely touch. Arrived in two boxes, took an evening to assemble. Very happy with the {name}.' },
+    { rating: 5, title: 'A real centrepiece', body: 'We chose the {name} for our terrace and it has completely transformed how we use the garden. Five months in and it still looks brand new.' },
+    { rating: 4, title: 'Beautiful but heavier than expected', body: 'Stunning piece — exactly as pictured. Took two of us to move it. One slight scratch on a corner from delivery, but Heritage sent a touch-up kit straight away.' },
+    { rating: 5, title: 'Worth saving up for', body: 'I went back and forth between this and a much cheaper set on Amazon. So glad I chose Heritage Garden. The quality difference is enormous.' },
+    { rating: 5, title: 'Excellent customer service', body: 'I rang to ask about teak care before ordering and the lady I spoke to was incredibly helpful. The furniture itself is wonderful.' },
+    { rating: 4, title: 'Lovely but assembly took a while', body: 'Took me about 90 minutes to put together rather than the 30 quoted. Once up though, it is rock-solid.' },
+    { rating: 5, title: 'Survived our first winter', body: 'Left out under a cover all winter and it still looks beautiful. The teak has greyed slightly which I love.' },
+    { rating: 5, title: 'Hand on heart, the best', body: 'Tried three other brands over the years. Nothing comes close to this. Heritage Garden have a customer for life.' },
+  ],
+  '/garden-parasols': [
+    { rating: 5, title: 'Survived three storms', body: 'Bought this last spring and it has handled everything the British weather has thrown at it. The wind vents really do work.' },
+    { rating: 5, title: 'Beautiful canopy colour', body: 'The ecru is the perfect off-white — not too cream, not too stark. Goes with absolutely everything in our garden.' },
+    { rating: 4, title: 'Heavier base needed', body: 'The parasol itself is wonderful but I had to buy a heavier base separately. Worth flagging on the product page.' },
+    { rating: 5, title: 'Tilt mechanism is smooth', body: 'I expected the tilt to be fiddly but it operates with one hand. Brilliant piece of engineering.' },
+    { rating: 5, title: 'Looks more expensive than it is', body: 'Genuinely looks like the £800 parasols at the garden centre. Very pleased with the {name}.' },
+    { rating: 4, title: 'Took some assembly', body: 'Instructions were clear but it does take a good 45 minutes to set up properly. Once up, it is flawless.' },
+    { rating: 5, title: 'Delivered in two days', body: 'Ordered Wednesday, arrived Friday by a real driver who carried it round the side. Could not fault the experience.' },
+    { rating: 5, title: 'Five years and still going', body: 'Fifth summer with my Heritage parasol. Canopy still holding its colour, mechanism still smooth. Properly impressed.' },
+  ],
+  '/gazebos': [
+    { rating: 5, title: 'Garden has a new heart', body: 'The {name} has become the focal point of our garden. We eat under it most evenings now. Beautifully made.' },
+    { rating: 5, title: 'Cedar smells incredible', body: 'The first few weeks the cedar aroma was lovely. The roof is properly weatherproof — sheltered from a downpour last week and stayed bone dry underneath.' },
+    { rating: 4, title: 'Big job to assemble', body: 'Took three of us a full Saturday. Instructions were good but it is a serious bit of kit. Worth the white-glove option.' },
+    { rating: 5, title: 'Built for British winters', body: 'A year in and there is zero movement, zero rot, zero trouble. Tested through last winter\'s named storms.' },
+    { rating: 5, title: 'The copper finials are everything', body: 'Such a small detail but it really lifts the whole structure. They have already started to verdigris beautifully.' },
+    { rating: 4, title: 'Pricey but earned its keep', body: 'I winced at the price at the time. Two summers in, I do not think about it anymore — best garden purchase we have made.' },
+    { rating: 5, title: 'Foundations were the only extra', body: 'Worth knowing you need a solid base before installation. Once that is done, the rest goes up beautifully.' },
+    { rating: 5, title: 'Guests ask where it is from', body: 'Hosted three garden parties this summer. Every single guest commented on the gazebo. Tell them all about Heritage Garden.' },
+  ],
+  '/outdoor-lights': [
+    { rating: 5, title: 'Transformed the patio', body: 'Strung the {name} along the pergola and the garden has come alive in the evenings. The warm white is exactly right.' },
+    { rating: 5, title: 'Survived three British winters', body: 'IP44 rating is no joke — these have weathered three winters left out and are still going strong.' },
+    { rating: 4, title: 'Cable shorter than expected', body: 'The lead from the plug to the first bulb is shorter than the listing suggests. Just needed an extension.' },
+    { rating: 5, title: 'Edison bulbs are gorgeous', body: 'The amber glow is exactly what I was after. Looks straight out of a Cotswold pub garden.' },
+    { rating: 5, title: 'Spare bulbs included', body: 'Lovely touch — spare bulbs in the box. Replacement is straightforward when one eventually goes.' },
+    { rating: 5, title: 'Better than the high street', body: 'Bought a similar-looking string from a big DIY store last year — they fell apart by August. These are properly made.' },
+    { rating: 4, title: 'Wish they were dimmable', body: 'Lovely lights but it would be nice to have a dimmer option for the brighter evenings. Tiny gripe.' },
+    { rating: 5, title: 'Solar version is a winner', body: 'No wiring, no electricity bill, just glow. Charges fine even in cloudy weather.' },
+  ],
+  '/accessories': [
+    { rating: 5, title: 'Completely changed the set', body: 'The {name} totally lifted our garden furniture. Proper feel, proper weight, properly made.' },
+    { rating: 5, title: 'Fabric is gorgeous', body: 'Soft to the touch but feels sturdy. Survived two unexpected showers without staining.' },
+    { rating: 4, title: 'Colour slightly different in person', body: 'The sage is a touch deeper than on screen — actually nicer than I expected. Just worth knowing.' },
+    { rating: 5, title: 'Tied the whole space together', body: 'Had the furniture for a year and never quite felt finished. This was the missing piece.' },
+    { rating: 5, title: 'Quick delivery, properly packed', body: 'Arrived next day, beautifully wrapped in recycled paper. Lovely touches throughout.' },
+    { rating: 4, title: 'Wish there was a bigger size', body: 'Love it. Would buy a larger size if you offered one.' },
+    { rating: 5, title: 'Heritage quality even on the small things', body: 'You can really feel the difference vs. similar items elsewhere. Made me want to order more.' },
+    { rating: 5, title: 'Hoses clean in seconds', body: 'After a muddy weekend it took two minutes with the hose. Back to looking new.' },
+  ],
+};
+
+function hashCode(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+}
+
+export function getReviewsForProduct(slug) {
+  const product = getProductBySlug(slug);
+  if (!product) return [];
+  const bank = REVIEW_BANK[product.categoryHref] || [];
+  if (bank.length === 0) return [];
+  // Deterministic pseudo-random selection so each product always shows the
+  // same reviews (no SSR/CSR mismatch, stable across reloads).
+  const seed = hashCode(slug) || 1;
+  const want = Math.min(6, bank.length);
+  const indices = [];
+  let cur = seed;
+  while (indices.length < want) {
+    cur = (cur * 1103515245 + 12345) & 0x7fffffff;
+    const idx = cur % bank.length;
+    if (!indices.includes(idx)) indices.push(idx);
+  }
+  // Anchor dates from a fixed reference so SSR and CSR agree.
+  const reference = new Date('2026-05-10T00:00:00Z');
+  return indices.map((idx, i) => {
+    const tpl = bank[idx];
+    const reviewer = REVIEWERS[(seed + i * 7) % REVIEWERS.length];
+    const daysAgo = ((seed + i * 31) % 280) + 6;
+    const date = new Date(reference);
+    date.setUTCDate(date.getUTCDate() - daysAgo);
+    return {
+      id: `${slug}-${idx}`,
+      rating: tpl.rating,
+      title: tpl.title,
+      body: tpl.body.replace(/\{name\}/g, product.name),
+      author: reviewer.name,
+      location: reviewer.location,
+      date: date.toISOString().slice(0, 10),
+      verified: true,
+    };
+  });
 }
 
 export { deliveryText, warrantyText };

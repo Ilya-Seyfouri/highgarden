@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/product/aspen-teak-dining-set)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/product/aspen-teak-dining-set http://localhost:3000/product/festoon-string-lights-10m http://localhost:3000/product/manor-cedar-gazebo)",
+      "Bash(curl -s -o /dev/null -w \"aspen: %{http_code}\\\\nfestoon: %{http_code}\\\\nmanor: %{http_code}\\\\n\" http://localhost:3000/product/aspen-teak-dining-set http://localhost:3000/product/festoon-string-lights-10m http://localhost:3000/product/manor-cedar-gazebo)",
+      "Bash(curl -s -o NUL -w \"%{http_code}\" http://localhost:3000/product/aspen-teak-dining-set)"
+    ]
+  }
+}

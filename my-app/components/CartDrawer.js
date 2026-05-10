@@ -1,20 +1,71 @@
+'use client';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useCart } from '@/lib/CartContext';
+import { formatPrice, priceToNumber } from '@/lib/products';
 
-const cartItems = [
-  {
-    id: 1,
-    name: 'Arden Pillar Light',
-    qty: 1,
-    price: '£245',
-    src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCGpdDE17cuSHtIdMdYIZe83f2jh2f9i3CtRvHRA4WjwOoSzSAqJTHV9lDqkNOfkgNKDgs8HhHjvnJAhYnUAU0hZIUy4_jghb_zdcxsRtIgq5nOtD8lXG3iD5q3mvtB95Fmf_sKWeUJKNarBn8LQZIkS5Rp7BEQr8DrARd2DE3IZhZsfhlBlSfoQzclV4xm7_IlU_WDcbXUEhcZGM3Io8acICJtwVqIqA9QxVfLVxS-V8MEU-u0UEEK3ww-orsSphTIrWRVhSVDgGQ',
-    alt: 'Close up of Arden Pillar Light',
-  },
-];
+function FreeGiftCard({ amountToFreeGift, hasEarnedFreeGift, freeGiftProduct, progress }) {
+  if (!freeGiftProduct) return null;
+  return (
+    <div className="mb-6 p-4 bg-brand-sage text-white">
+      <div className="flex items-center gap-2 mb-2">
+        <span
+          className="material-symbols-outlined text-xl"
+          style={{ fontVariationSettings: "'FILL' 1" }}
+          aria-hidden="true"
+        >
+          {hasEarnedFreeGift ? 'redeem' : 'card_giftcard'}
+        </span>
+        <p className="font-button text-button uppercase tracking-widest text-white">
+          {hasEarnedFreeGift ? 'Free Gift Unlocked' : 'Free Gift Offer'}
+        </p>
+      </div>
+      <p className="font-body-md text-sm text-white/90 leading-snug mb-3">
+        {hasEarnedFreeGift ? (
+          <>
+            We&apos;ve added a complimentary{' '}
+            <strong className="text-white">{freeGiftProduct.name}</strong> to your basket — our
+            thanks for spending over {formatPrice(400)}.
+          </>
+        ) : (
+          <>
+            You&apos;re{' '}
+            <strong className="text-white">{formatPrice(amountToFreeGift)}</strong> away from a
+            free <strong className="text-white">{freeGiftProduct.name}</strong>.
+          </>
+        )}
+      </p>
+      <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-brand-terracotta transition-all duration-500"
+          style={{ width: `${Math.round(progress * 100)}%` }}
+        />
+      </div>
+    </div>
+  );
+}
 
-export default function CartDrawer({ isOpen, onClose }) {
+export default function CartDrawer({ isOpen: isOpenProp, onClose: onCloseProp }) {
+  const {
+    items,
+    isOpen: ctxIsOpen,
+    closeCart,
+    removeItem,
+    setQty,
+    subtotal,
+    totalItems,
+    freeGiftProduct,
+    hasEarnedFreeGift,
+    amountToFreeGift,
+    freeGiftProgress,
+  } = useCart();
+  // Backwards-compatible: callers can still pass isOpen/onClose, otherwise
+  // the drawer self-manages via context.
+  const isOpen = isOpenProp ?? ctxIsOpen;
+  const onClose = onCloseProp ?? closeCart;
+
   return (
     <>
-      {/* Backdrop */}
       {isOpen && (
         <div
           className="fixed inset-0 z-[99] bg-black/30"
@@ -31,8 +82,17 @@ export default function CartDrawer({ isOpen, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between px-8 py-6 border-b border-outline-variant/40">
           <div>
-            <span className="font-label-caps text-label-caps text-brand-terracotta uppercase block mb-1">Heritage Garden</span>
-            <h2 className="font-h2 text-2xl text-brand-sage leading-none">Your Selection</h2>
+            <span className="font-label-caps text-label-caps text-brand-terracotta uppercase block mb-1">
+              Heritage Garden
+            </span>
+            <h2 className="font-h2 text-2xl text-brand-sage leading-none">
+              Your Basket{' '}
+              {totalItems > 0 && (
+                <span className="text-on-surface-variant text-base font-body-md">
+                  ({totalItems})
+                </span>
+              )}
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -44,37 +104,132 @@ export default function CartDrawer({ isOpen, onClose }) {
         </div>
 
         {/* Items */}
-        <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
-          {cartItems.map((item) => (
-            <div key={item.id} className="flex gap-5 items-start">
-              <div className="relative w-24 h-24 shrink-0 overflow-hidden border border-outline-variant/40">
-                <Image src={item.src} alt={item.alt} fill className="object-cover" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h5 className="font-h3 text-lg text-brand-sage mb-1 leading-snug">{item.name}</h5>
-                <div className="flex items-center gap-3 mt-2">
-                  <span className="font-body-md text-xs text-on-surface-variant uppercase tracking-widest">Qty: {item.qty}</span>
-                  <button className="text-xs text-brand-terracotta font-body-md uppercase tracking-widest hover:opacity-70 transition-opacity">Remove</button>
-                </div>
-              </div>
-              <span className="font-h3 text-lg text-brand-sage shrink-0">{item.price}</span>
+        <div className="flex-1 overflow-y-auto px-8 py-6">
+          {items.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center text-center">
+              <span className="material-symbols-outlined text-5xl text-on-surface-variant mb-4">
+                shopping_bag
+              </span>
+              <p className="font-h3 text-xl text-brand-sage mb-2">Your basket is empty</p>
+              <p className="font-body-md text-sm text-on-surface-variant max-w-[260px]">
+                Browse the range and add the pieces that catch your eye.
+              </p>
             </div>
-          ))}
+          ) : (
+            <>
+              <FreeGiftCard
+                amountToFreeGift={amountToFreeGift}
+                hasEarnedFreeGift={hasEarnedFreeGift}
+                freeGiftProduct={freeGiftProduct}
+                progress={freeGiftProgress}
+              />
+              <ul className="space-y-6">
+                {items.map((item) => {
+                  const lineTotal = priceToNumber(item.product.price) * item.qty;
+                  return (
+                    <li key={`${item.slug}-${item.size ?? 'default'}-${item.isFreeGift ? 'gift' : 'paid'}`} className="flex gap-4 items-start">
+                      <Link
+                        href={`/product/${item.slug}`}
+                        onClick={onClose}
+                        className="relative w-24 h-24 shrink-0 overflow-hidden border border-outline-variant/40 bg-surface-container"
+                      >
+                        <Image
+                          src={item.product.images[0]}
+                          alt={item.product.name}
+                          fill
+                          sizes="96px"
+                          className="object-cover"
+                        />
+                        {item.isFreeGift && (
+                          <span className="absolute top-1 left-1 px-1.5 py-0.5 bg-brand-sage text-white text-[9px] font-bold uppercase tracking-widest">
+                            Free
+                          </span>
+                        )}
+                      </Link>
+                      <div className="flex-1 min-w-0">
+                        <Link
+                          href={`/product/${item.slug}`}
+                          onClick={onClose}
+                          className="font-h3 text-base text-brand-sage leading-snug hover:text-brand-terracotta transition-colors block"
+                        >
+                          {item.product.name}
+                        </Link>
+                        {item.size && (
+                          <p className="font-body-md text-xs text-on-surface-variant mt-1">
+                            Size: {item.size}
+                          </p>
+                        )}
+                        {item.isFreeGift ? (
+                          <p className="mt-3 font-body-md text-xs text-brand-sage uppercase tracking-widest">
+                            Complimentary gift · Qty 1
+                          </p>
+                        ) : (
+                          <div className="flex items-center justify-between mt-3 gap-3">
+                            <div className="flex items-center border border-outline-variant">
+                              <button
+                                onClick={() => setQty(item.slug, item.size, item.qty - 1)}
+                                aria-label="Decrease quantity"
+                                className="w-8 h-8 flex items-center justify-center hover:bg-surface-container-low transition-colors"
+                              >
+                                <span className="material-symbols-outlined text-sm">remove</span>
+                              </button>
+                              <span className="w-8 text-center font-body-md text-sm">{item.qty}</span>
+                              <button
+                                onClick={() => setQty(item.slug, item.size, item.qty + 1)}
+                                aria-label="Increase quantity"
+                                className="w-8 h-8 flex items-center justify-center hover:bg-surface-container-low transition-colors"
+                              >
+                                <span className="material-symbols-outlined text-sm">add</span>
+                              </button>
+                            </div>
+                            <button
+                              onClick={() => removeItem(item.slug, item.size)}
+                              className="text-xs text-brand-terracotta font-body-md uppercase tracking-widest hover:opacity-70 transition-opacity"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      <span className={`font-h3 text-base shrink-0 ${item.isFreeGift ? 'text-brand-terracotta' : 'text-brand-sage'}`}>
+                        {item.isFreeGift ? 'FREE' : formatPrice(lineTotal)}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          )}
         </div>
 
         {/* Footer */}
         <div className="px-8 py-6 border-t border-outline-variant/40 space-y-5">
-          <div className="flex justify-between items-center">
-            <span className="font-body-md text-sm text-on-surface-variant uppercase tracking-widest">Subtotal</span>
-            <span className="font-h3 text-2xl text-brand-sage">£245.00</span>
+          <div className="flex justify-between items-baseline">
+            <span className="font-body-md text-sm text-on-surface-variant uppercase tracking-widest">
+              Subtotal
+            </span>
+            <span className="font-h3 text-2xl text-brand-sage">
+              {formatPrice(subtotal)}
+            </span>
           </div>
-          <p className="font-body-md text-xs text-on-surface-variant">Delivery calculated at checkout. Free on orders over £100.</p>
-          <button className="w-full min-h-[52px] bg-brand-sage text-white font-button text-button uppercase hover:bg-brand-terracotta transition-colors">
+          <p className="font-body-md text-xs text-on-surface-variant">
+            Delivery calculated at checkout. Free on orders over £100.
+          </p>
+          <Link
+            href="/checkout"
+            onClick={onClose}
+            aria-disabled={items.length === 0}
+            className={`flex items-center justify-center text-center w-full min-h-[52px] font-button text-button uppercase transition-colors ${
+              items.length === 0
+                ? 'bg-outline-variant text-on-surface-variant cursor-not-allowed pointer-events-none'
+                : 'bg-brand-sage text-white hover:bg-brand-terracotta'
+            }`}
+          >
             Proceed to Checkout
-          </button>
+          </Link>
           <button
             onClick={onClose}
-            className="w-full min-h-[48px] border border-brand-sage text-brand-sage font-button text-button uppercase hover:bg-surface-container-low transition-colors"
+            className="block w-full min-h-[48px] border border-brand-sage text-brand-sage font-button text-button uppercase hover:bg-surface-container-low transition-colors"
           >
             Continue Shopping
           </button>

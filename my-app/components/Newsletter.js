@@ -1,3 +1,4 @@
+'use client';
 export default function Newsletter() {
   return (
     <section className="py-16 md:py-stack-lg bg-surface">
@@ -5,7 +6,7 @@ export default function Newsletter() {
         <span className="font-label-caps text-label-caps text-brand-terracotta mb-4 block uppercase">
           The Garden Club
         </span>
-        <h2 className="trust-title-shine font-h1 text-h2-mobile md:text-h2 lg:text-5xl mb-5 md:mb-6">
+        <h2 className="font-h1 text-h2-mobile md:text-h2 lg:text-5xl text-brand-sage mb-5 md:mb-6">
           Join the Garden Club
         </h2>
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-8 md:mb-12">
