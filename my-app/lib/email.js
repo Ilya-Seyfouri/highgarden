@@ -15,7 +15,7 @@ function itemsTable(items) {
       (item) => `
       <tr>
         <td style="padding:10px 0;border-bottom:1px solid #e8ede8;font-size:14px;color:#1c1b1f;">
-          ${item.products?.name ?? item.product_id}
+          ${item.product_name}
           ${item.size ? `<span style="color:#666;font-size:12px;"> — ${item.size}</span>` : ''}
         </td>
         <td style="padding:10px 0;border-bottom:1px solid #e8ede8;font-size:14px;color:#1c1b1f;text-align:center;">

@@ -220,6 +220,7 @@ function CheckoutForm({ cartItems, subtotal, deliveryCost, total, paymentIntentI
       },
       cartItems.map((item) => ({
         slug: item.slug,
+        name: item.product.name,
         size: item.size,
         quantity: item.qty,
         unitPrice: item.isFreeGift ? 0 : priceToNumber(item.product.price),

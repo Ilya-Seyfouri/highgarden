@@ -33,7 +33,7 @@ export async function POST(request) {
     // Fetch full order + items for the emails
     const { data: order, error: fetchError } = await supabaseAdmin
       .from('orders')
-      .select(`*, order_items(*, products(name, slug))`)
+      .select(`*, order_items(*)`)
       .eq('stripe_payment_intent_id', pi.id)
       .single();
 
