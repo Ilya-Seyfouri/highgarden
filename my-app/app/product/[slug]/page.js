@@ -4,8 +4,13 @@ import {
   getRelatedProducts,
   getBundleProducts,
   getReviewsForProduct,
+  getAllSlugs,
 } from '@/lib/products';
 import ProductPageLayout from '@/components/ProductPageLayout';
+
+export async function generateStaticParams() {
+  return getAllSlugs().map((slug) => ({ slug }));
+}
 
 export default async function ProductPage({ params }) {
   const { slug } = await params;

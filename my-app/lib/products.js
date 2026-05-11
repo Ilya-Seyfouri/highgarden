@@ -36,6 +36,10 @@ const allProducts = [
   },
 ];
 
+export function getAllSlugs() {
+  return allProducts.map((p) => p.slug);
+}
+
 export function getProductBySlug(slug) {
   return allProducts.find((p) => p.slug === slug) || null;
 }
