@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useCart } from '@/lib/CartContext';
 
 const leftLinks = [
@@ -36,7 +37,7 @@ export default function Navbar({ onCartOpen }) {
 
             <div className="hidden lg:flex items-center gap-6">
               {leftLinks.map((l) => (
-                <a
+                <Link
                   key={l.label}
                   className={`font-button text-button uppercase transition-colors whitespace-nowrap ${
                     l.accent ? 'text-brand-terracotta hover:opacity-80' : 'text-primary hover:text-brand-terracotta'
@@ -44,21 +45,21 @@ export default function Navbar({ onCartOpen }) {
                   href={l.href}
                 >
                   {l.label}
-                </a>
+                </Link>
               ))}
             </div>
 
-            <a
+            <Link
               className="absolute left-1/2 -translate-x-1/2 font-h1 text-2xl md:text-4xl text-brand-sage tracking-tight"
               href="/"
             >
               Heritage Garden
-            </a>
+            </Link>
 
             <div className="flex items-center gap-1 md:gap-3">
               <div className="hidden lg:flex items-center gap-6 mr-4">
                 {rightLinks.map((l) => (
-                  <a
+                  <Link
                     key={l.label}
                     className={`font-button text-button uppercase transition-colors whitespace-nowrap ${
                       l.accent ? 'text-brand-terracotta hover:opacity-80' : 'text-primary hover:text-brand-terracotta'
@@ -66,7 +67,7 @@ export default function Navbar({ onCartOpen }) {
                     href={l.href}
                   >
                     {l.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
 
@@ -120,7 +121,7 @@ export default function Navbar({ onCartOpen }) {
             </div>
             <nav className="flex flex-col py-4">
               {allLinks.map((l) => (
-                <a
+                <Link
                   key={l.label}
                   href={l.href}
                   onClick={() => setMenuOpen(false)}
@@ -129,7 +130,7 @@ export default function Navbar({ onCartOpen }) {
                   }`}
                 >
                   {l.label}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>

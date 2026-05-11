@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const helpLinks = [
   { label: 'Customer Service', href: '/customer-service' },
   { label: 'Delivery Information', href: '/delivery-information' },
@@ -79,9 +81,9 @@ export default function Footer() {
               <ul className="space-y-3 md:space-y-4 font-body-md text-base text-white/75">
                 {helpLinks.map((link) => (
                   <li key={link.href}>
-                    <a className="hover:text-brand-terracotta transition-colors" href={link.href}>
+                    <Link className="hover:text-brand-terracotta transition-colors" href={link.href}>
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -93,9 +95,9 @@ export default function Footer() {
               <ul className="space-y-3 md:space-y-4 font-body-md text-base text-white/75">
                 {shopLinks.map((link) => (
                   <li key={link.href}>
-                    <a className="hover:text-brand-terracotta transition-colors" href={link.href}>
+                    <Link className="hover:text-brand-terracotta transition-colors" href={link.href}>
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -107,9 +109,9 @@ export default function Footer() {
               <ul className="space-y-3 md:space-y-4 font-body-md text-base text-white/75">
                 {aboutLinks.map((link) => (
                   <li key={link.href}>
-                    <a className="hover:text-brand-terracotta transition-colors" href={link.href}>
+                    <Link className="hover:text-brand-terracotta transition-colors" href={link.href}>
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

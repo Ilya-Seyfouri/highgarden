@@ -141,7 +141,7 @@ export default function CategoryPageLayout({ category }) {
 
               return (
                 <div key={product.id} className="group block">
-                  <Link href={`/product/${product.slug}`} className="block">
+                  <Link href={`/product/${product.slug}`} prefetch className="block">
                     <div className="aspect-[4/5] bg-surface-container overflow-hidden relative mb-5 md:mb-6">
                       <Image
                         src={product.src}
@@ -184,12 +184,9 @@ export default function CategoryPageLayout({ category }) {
                         </>
                       )}
                     </p>
-                  </Link>
-                  <Link
-                    href={`/product/${product.slug}`}
-                    className="mt-5 md:mt-6 w-full min-h-[52px] bg-brand-sage text-white font-button text-button uppercase hover:bg-brand-terracotta transition-colors flex items-center justify-center"
-                  >
-                    View Product
+                    <div className="mt-5 md:mt-6 w-full min-h-[52px] bg-brand-sage text-white font-button text-button uppercase group-hover:bg-brand-terracotta transition-colors flex items-center justify-center">
+                      View Product
+                    </div>
                   </Link>
                   <button
                     type="button"
