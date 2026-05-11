@@ -8,7 +8,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { getProductBySlug, priceToNumber, formatPrice } from '@/lib/products';
 import { useCart } from '@/lib/CartContext';
-import { createOrder } from '@/lib/supabase';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -201,35 +200,39 @@ function CheckoutForm({ cartItems, subtotal, deliveryCost, total, paymentIntentI
     // Pre-save the order as 'pending' before charging the card.
     // The webhook will flip it to 'confirmed' once Stripe fires, even if
     // the browser closes before we get back here.
-    const { error: orderError } = await createOrder(
-      {
-        fullName: `${form.firstName} ${form.lastName}`.trim(),
-        email: form.email,
-        phone: form.phone,
-        addressLine1: form.addressLine1,
-        addressLine2: form.addressLine2,
-        city: form.city,
-        county: form.county,
-        postcode: form.postcode,
-        subtotal,
-        deliveryCost,
-        total,
-        paymentMethod: 'stripe',
-        marketingOptIn: marketing,
-        stripePaymentIntentId: paymentIntentId,
-      },
-      cartItems.map((item) => ({
-        slug: item.slug,
-        name: item.product.name,
-        size: item.size,
-        quantity: item.qty,
-        unitPrice: item.isFreeGift ? 0 : priceToNumber(item.product.price),
-      }))
-    );
+    const orderRes = await fetch('/api/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        order: {
+          fullName: `${form.firstName} ${form.lastName}`.trim(),
+          email: form.email,
+          phone: form.phone,
+          addressLine1: form.addressLine1,
+          addressLine2: form.addressLine2,
+          city: form.city,
+          county: form.county,
+          postcode: form.postcode,
+          subtotal,
+          deliveryCost,
+          total,
+          paymentMethod: 'stripe',
+          marketingOptIn: marketing,
+          stripePaymentIntentId: paymentIntentId,
+        },
+        items: cartItems.map((item) => ({
+          slug: item.slug,
+          name: item.product.name,
+          size: item.size,
+          quantity: item.qty,
+          unitPrice: item.isFreeGift ? 0 : priceToNumber(item.product.price),
+        })),
+      }),
+    });
 
-    if (orderError) {
+    if (!orderRes.ok) {
       // Don't block payment — webhook is the safety net.
-      console.error('Pre-save order failed:', orderError);
+      console.error('Pre-save order failed:', await orderRes.text());
     }
 
     const { error } = await stripe.confirmPayment({
