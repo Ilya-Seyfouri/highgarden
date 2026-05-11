@@ -1,4 +1,5 @@
 import { supabaseAdmin } from '@/lib/supabase-admin';
+import { sendOrderConfirmation, sendOwnerNotification } from '@/lib/email';
 
 export async function POST(request) {
   const { order, items } = await request.json();
@@ -23,28 +24,39 @@ export async function POST(request) {
       marketing_opt_in:         order.marketingOptIn ?? false,
       stripe_payment_intent_id: order.stripePaymentIntentId ?? null,
     })
-    .select('id')
+    .select('*')
     .single();
 
   if (orderError) {
     return Response.json({ error: orderError.message }, { status: 500 });
   }
 
-  const { error: itemsError } = await supabaseAdmin.from('order_items').insert(
-    items.map((item) => ({
-      order_id:     row.id,
-      product_slug: item.slug,
-      product_name: item.name,
-      size:         item.size ?? null,
-      quantity:     item.quantity,
-      unit_price:   item.unitPrice,
-      total_price:  item.unitPrice * item.quantity,
-    }))
-  );
+  const itemRows = items.map((item) => ({
+    order_id:     row.id,
+    product_slug: item.slug,
+    product_name: item.name,
+    size:         item.size ?? null,
+    quantity:     item.quantity,
+    unit_price:   item.unitPrice,
+    total_price:  item.unitPrice * item.quantity,
+  }));
+
+  const { error: itemsError } = await supabaseAdmin.from('order_items').insert(itemRows);
 
   if (itemsError) {
     return Response.json({ error: itemsError.message }, { status: 500 });
   }
+
+  // Fire emails inline so the dev environment doesn't need a Stripe
+  // webhook forwarder. The webhook still confirms order status later.
+  await Promise.allSettled([
+    sendOrderConfirmation(row, itemRows).catch((e) =>
+      console.error('Customer receipt failed:', e)
+    ),
+    sendOwnerNotification(row, itemRows).catch((e) =>
+      console.error('Owner notification failed:', e)
+    ),
+  ]);
 
   return Response.json({ orderId: row.id });
 }
