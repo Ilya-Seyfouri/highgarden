@@ -1,10 +1,10 @@
-import { supabaseAdmin } from '@/lib/supabase-admin';
+import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import { sendOrderConfirmation, sendOwnerNotification } from '@/lib/email';
 
 export async function POST(request) {
   const { order, items } = await request.json();
 
-  const { data: row, error: orderError } = await supabaseAdmin
+  const { data: row, error: orderError } = await getSupabaseAdmin()
     .from('orders')
     .insert({
       full_name:                order.fullName,
@@ -41,7 +41,7 @@ export async function POST(request) {
     total_price:  item.unitPrice * item.quantity,
   }));
 
-  const { error: itemsError } = await supabaseAdmin.from('order_items').insert(itemRows);
+  const { error: itemsError } = await getSupabaseAdmin().from('order_items').insert(itemRows);
 
   if (itemsError) {
     return Response.json({ error: itemsError.message }, { status: 500 });

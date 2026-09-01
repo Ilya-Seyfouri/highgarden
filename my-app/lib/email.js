@@ -1,6 +1,12 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Built lazily: at build time `next build` imports the routes that use this
+// to collect route data, and the Resend constructor throws without a key.
+let resend;
+function getResend() {
+  resend ??= new Resend(process.env.RESEND_API_KEY);
+  return resend;
+}
 
 const SAGE = '#334f2b';
 const TERRACOTTA = '#c4724a';
@@ -195,7 +201,7 @@ export function ownerNotificationHtml(order, items) {
 }
 
 export async function sendOrderConfirmation(order, items) {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: process.env.EMAIL_FROM,
     to: order.email,
     subject: `Your Heritage Garden order is confirmed — ${formatPrice(order.total)}`,
@@ -204,7 +210,7 @@ export async function sendOrderConfirmation(order, items) {
 }
 
 export async function sendOwnerNotification(order, items) {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: process.env.EMAIL_FROM,
     to: process.env.OWNER_EMAIL,
     subject: `New order — ${order.full_name} — ${formatPrice(order.total)}`,

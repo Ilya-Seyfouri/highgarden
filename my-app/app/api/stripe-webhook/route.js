@@ -1,8 +1,14 @@
 import Stripe from 'stripe';
-import { supabaseAdmin } from '@/lib/supabase-admin';
+import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import { sendOrderConfirmation, sendOwnerNotification } from '@/lib/email';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// Built lazily: at build time `next build` imports this module to collect
+// route data, and the Stripe constructor throws if the key isn't set yet.
+let stripe;
+function getStripe() {
+  stripe ??= new Stripe(process.env.STRIPE_SECRET_KEY);
+  return stripe;
+}
 
 export async function POST(request) {
   const body = await request.text();
@@ -10,7 +16,7 @@ export async function POST(request) {
 
   let event;
   try {
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    event = getStripe().webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     return Response.json({ error: `Webhook signature failed: ${err.message}` }, { status: 400 });
   }
@@ -19,7 +25,7 @@ export async function POST(request) {
     const pi = event.data.object;
 
     // Confirm the order
-    const { error: updateError } = await supabaseAdmin
+    const { error: updateError } = await getSupabaseAdmin()
       .from('orders')
       .update({ status: 'confirmed' })
       .eq('stripe_payment_intent_id', pi.id)
@@ -31,7 +37,7 @@ export async function POST(request) {
     }
 
     // Fetch full order + items for the emails
-    const { data: order, error: fetchError } = await supabaseAdmin
+    const { data: order, error: fetchError } = await getSupabaseAdmin()
       .from('orders')
       .select(`*, order_items(*)`)
       .eq('stripe_payment_intent_id', pi.id)

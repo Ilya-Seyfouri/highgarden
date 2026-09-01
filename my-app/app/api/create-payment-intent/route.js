@@ -1,6 +1,12 @@
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// Built lazily: at build time `next build` imports this module to collect
+// route data, and the Stripe constructor throws if the key isn't set yet.
+let stripe;
+function getStripe() {
+  stripe ??= new Stripe(process.env.STRIPE_SECRET_KEY);
+  return stripe;
+}
 
 export async function POST(request) {
   const { amountPence } = await request.json();
@@ -9,7 +15,7 @@ export async function POST(request) {
     return Response.json({ error: 'Invalid amount' }, { status: 400 });
   }
 
-  const paymentIntent = await stripe.paymentIntents.create({
+  const paymentIntent = await getStripe().paymentIntents.create({
     amount: amountPence,
     currency: 'gbp',
     automatic_payment_methods: { enabled: true },
